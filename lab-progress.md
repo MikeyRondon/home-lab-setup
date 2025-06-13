@@ -7,22 +7,26 @@ This file documents the setup steps and progress of my home cybersecurity lab. I
 ## ✅ Completed
 
 - [x] Installed VirtualBox on Windows 10 host
-- [x] Created and configured Kali Linux VM
-- [x] Created and configured Windows 10 VM
-- [x] Set up NAT + Host-Only network adapters for VM isolation
-- [x] Installed Wireshark on host and Kali for network monitoring
-- [x] Joined TryHackMe and completed first room (e.g., “Intro to Cybersecurity”)
+- [x] Downloaded and extracted Kali Linux VirtualBox VM files (.vdi + .vbox)
+- [x] Manually imported Kali VM into VirtualBox
+- [x] Configured Kali with NAT + Host-Only network adapters
+- [x] Successfully booted and logged into Kali Linux
+- [x] Updated Kali system via terminal (`sudo apt update && sudo apt upgrade -y`)
+- [x] Took VirtualBox snapshot of clean Kali install
 
 ---
 
 ## 🛠️ In Progress
 
-- [ ] Install and configure Ubuntu Server
-- [ ] Deploy Wazuh as a SIEM/log aggregator
+- [ ] Create and configure Windows 10 VM
+- [ ] Install Wireshark on host and Kali
 - [ ] Simulate basic reconnaissance scan from Kali
 - [ ] Analyze scan traffic in Wireshark
+- [ ] Install and configure Ubuntu Server
 - [ ] Set up Sysmon on Windows 10 endpoint
+- [ ] Deploy Wazuh as a SIEM/log aggregator
 - [ ] Configure Wazuh to collect and correlate logs
+- [ ] Join TryHackMe and complete first room
 
 ---
 
