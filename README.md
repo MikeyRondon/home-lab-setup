@@ -66,6 +66,12 @@ I’ll be adding screenshots of my network setup, VM configurations, packet capt
 
 ---
 
+## 📂 Projects
+
+- [Wireshark Traffic Analysis](./wireshark-traffic-analysis.md) – Planned lab to simulate a port scan and analyze captured packets using Wireshark.
+
+---
+
 ## 🚧 In Progress
 
 - Configure Wazuh SIEM  
