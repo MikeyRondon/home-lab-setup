@@ -69,6 +69,9 @@ Screenshots are included in individual project folders and lab writeups (see bel
 
 - [Wireshark TCP SYN Scan Analysis](./wireshark-scan-analysis.md)  
   Performed a basic TCP SYN scan using Nmap, captured network traffic with Wireshark, and analyzed TCP handshake behavior between isolated virtual machines.
+- [Home Lab Architecture Overview](./setup-overview.md)  
+  Breakdown of host specs, VM layout, network segmentation, and tool selection used to build my home cybersecurity lab.
+
 
 ---
 
