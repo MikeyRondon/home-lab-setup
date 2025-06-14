@@ -19,6 +19,11 @@ This file documents the setup steps and progress of my home cybersecurity lab. I
 - [x] Installed Windows 10 using a local (offline) account
 - [x] Installed VirtualBox Guest Additions on Windows VM
 - [x] Took snapshot of clean Windows 10 install
+- [x] Verified Host-Only communication between Kali and Windows VMs (ping successful)
+- [x] Installed Wireshark on Kali Linux
+- [x] Ran a TCP SYN scan from Kali to Windows 10 using Nmap
+- [x] Captured and filtered traffic in Wireshark using `tcp.flags.syn == 1 && tcp.flags.ack == 0`
+
 
 ---
 
