@@ -1,6 +1,6 @@
-# ⚙️ Home Lab Setup Guide
+# 🏗️ Home Lab Architecture Overview
 
-This guide outlines the configuration of my home cybersecurity lab, including host OS, virtualization platform, virtual machines, and network layout. The goal is to build an isolated and flexible environment for exploring threat detection, system hardening, and SOC-style monitoring.
+This document outlines the configuration and design of my home cybersecurity lab, including host system specs, virtualization platform, virtual machines, and network segmentation. The goal is to build an isolated and flexible environment for exploring threat detection, system hardening, and SOC-style monitoring.
 
 ---
 
