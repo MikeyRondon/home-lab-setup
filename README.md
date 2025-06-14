@@ -68,7 +68,8 @@ I’ll be adding screenshots of my network setup, VM configurations, packet capt
 
 ## 📂 Projects
 
-- [Wireshark Traffic Analysis](./wireshark-traffic-analysis.md) – Planned lab to simulate a port scan and analyze captured packets using Wireshark.
+- [Wireshark TCP SYN Scan Analysis](./wireshark-scan-analysis.md)  
+  Performed a basic TCP SYN scan using Nmap, captured network traffic with Wireshark, and analyzed TCP handshake behavior in a virtualized lab environment.
 
 ---
 
