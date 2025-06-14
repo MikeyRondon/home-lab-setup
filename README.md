@@ -68,7 +68,11 @@ Screenshots are included in individual project folders and lab writeups (see bel
 ## 📂 Projects
 
 - [Wireshark TCP SYN Scan Analysis](./wireshark-scan-analysis.md)  
-  Performed a basic TCP SYN scan using Nmap, captured network traffic with Wireshark, and analyzed TCP handshake behavior between isolated virtual machines.
+  Performed a basic TCP SYN scan using Nmap, captured traffic with Wireshark, and analyzed packet flow between isolated virtual machines.
+
+- [Sysmon Log Analysis](./sysmon-log-analysis.md)  
+  Installed and configured Sysmon on a Windows VM to monitor and log endpoint activity during simulated reconnaissance.
+
 - [Home Lab Architecture Overview](./setup-overview.md)  
   Breakdown of host specs, VM layout, network segmentation, and tool selection used to build my home cybersecurity lab.
 
