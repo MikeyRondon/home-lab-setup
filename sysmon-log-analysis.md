@@ -110,13 +110,36 @@ However, **Event ID 3 (network connection)** was not recorded — likely filtere
 #### Event Viewer showing Event ID 22 for PowerShell  
 ![Event ID 22 - PowerShell](./screenshots/EV%20id%2022%20no%20ID3.PNG)
 
+### 🔹 File Creation – Event ID 11
+
+```powershell
+New-Item -Path C:\Users\Public\sysmon-lab-test.txt -ItemType File
+```
+
+Sysmon successfully logged this action as **Event ID 11**, indicating a file was created by `powershell.exe`.
+
+The event captured the full **TargetFilename**, **Image path**, and **Process ID**, providing insight into endpoint-level file activity.
+
+This demonstrates how Sysmon tracks file creation by specific executables, which can be crucial for detecting suspicious script behavior or lateral movement.
+
+---
+
+### 📸 Screenshots
+
+#### PowerShell – File Creation Command  
+![PowerShell File Creation](./screenshots/PS%20FileCreate%20proj.2.PNG)
+
+#### Event Viewer – Event ID 11 Logged  
+![Sysmon Event ID 11 – File Creation](./screenshots/EV%20ID%2011%20FileCreate%20proj.2.PNG)
+
 
 ## 🧠 Observations
 
-- Sysmon reliably logs **process creation** (Event ID 1).  
-- DNS queries may appear as **Event ID 3** (network connection) or **Event ID 22** (DNS query), depending on the tool used and the Sysmon config.  
-- PowerShell-initiated connections sometimes bypass **Event ID 3** logging under default configurations.  
-- Effective real-world monitoring requires tuning Sysmon rules for full network visibility and endpoint telemetry.
+- Sysmon reliably logs **process creation** (Event ID 1) and provides detailed metadata like parent-child relationships and hashes.
+- **DNS activity** can appear as either Event ID 3 or 22 depending on the command used and the active configuration.
+- **PowerShell web requests** were logged under Event ID 22, but did not always trigger Event ID 3 — likely due to filtering in the SwiftOnSecurity config.
+- **File creation** (Event ID 11) was not logged under the default configuration until a minimal test config was applied, highlighting how **Sysmon's effectiveness depends heavily on how it's configured**.
+- For accurate endpoint monitoring, custom or expanded configs are essential — especially for detecting attacker behaviors like script-based file drops or silent connections.
 
 ---
 
@@ -147,16 +170,20 @@ However, **Event ID 3 (network connection)** was not recorded — likely filtere
 
 ## ✅ Summary
 
-This lab demonstrates how Sysmon provides deep insight into Windows endpoint behavior.  
-By simulating activity such as process launches, DNS lookups, and outbound HTTP connections,  
-I was able to examine how and when different events are captured — and what may be filtered by default.
+This lab demonstrates how Sysmon provides deep visibility into endpoint activity, from process creation and network behavior to DNS queries and file creation.
+
+By simulating common system actions — like launching applications, performing DNS lookups, making web requests, and creating files — we tested how Sysmon detects and logs these events.
+
+We also observed that Sysmon’s default or community configurations (like SwiftOnSecurity’s) may filter out important events like file creation unless explicitly configured.
+
+These findings underscore the importance of using custom or minimal configs in lab environments for full visibility, especially when preparing for threat detection and SIEM integration work.
 
 ---
 
-### 🧭 Next Steps
+**Next steps:**
+- Forward Sysmon logs to a SIEM (e.g., Wazuh)
+- Trigger and test alerts using detection rules (e.g., Sigma)
+- Write incident-style summaries based on real event log data
 
-- Integrate Sysmon logs into a SIEM (e.g., Wazuh)  
-- Test alert generation using detection rules (e.g., Sigma)  
-- Write incident-style summaries for log analysis practice
 
 
