@@ -56,13 +56,6 @@ To install and configure Sysmon on a Windows 10 virtual machine and analyze logs
 ```powershell
 Start-Process notepad
 ```
-## 🔍 Simulated Events and Observations
-
-### 🔹 Process Creation – Notepad (Event ID 1)
-
-```powershell
-Start-Process notepad
-```
 Sysmon successfully logged this as Event ID 1.
 
 Captured the full command line, hash values, and parent process (PowerShell).
