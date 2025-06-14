@@ -13,13 +13,19 @@ This file documents the setup steps and progress of my home cybersecurity lab. I
 - [x] Successfully booted and logged into Kali Linux
 - [x] Updated Kali system via terminal (`sudo apt update && sudo apt upgrade -y`)
 - [x] Took VirtualBox snapshot of clean Kali install
+- [x] Downloaded Windows 10 ISO from Microsoft
+- [x] Created Windows 10 VM in VirtualBox
+- [x] Assigned NAT + Host-Only network adapters to Windows VM
+- [x] Installed Windows 10 using a local (offline) account
+- [x] Installed VirtualBox Guest Additions on Windows VM
+- [x] Took snapshot of clean Windows 10 install
 
 ---
 
 ## 🛠️ In Progress
 
-- [ ] Create and configure Windows 10 VM
-- [ ] Install Wireshark on host and Kali
+- [ ] Test network communication between Kali and Windows
+- [ ] Install Wireshark on Kali and/or host
 - [ ] Simulate basic reconnaissance scan from Kali
 - [ ] Analyze scan traffic in Wireshark
 - [ ] Install and configure Ubuntu Server
