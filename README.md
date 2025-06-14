@@ -1,9 +1,8 @@
-# home-lab-setup
+# 🧪 Home Lab Setup
+
 My personal cybersecurity lab using virtual machines and open-source tools.
 
-# 🧪 Home Cybersecurity Lab
-
-This project documents the setup and use of my personal home cybersecurity lab, designed for hands-on learning in IT support, networking, and SOC analyst skills.
+This project documents the setup and use of my home cybersecurity lab, designed for hands-on learning in IT support, networking, and SOC analyst skills. It includes system configurations, threat simulations, traffic analysis, and writeups for real-world tools.
 
 ---
 
@@ -21,55 +20,55 @@ To create a secure and flexible virtual environment where I can explore threat d
   - Kali Linux (attacker/testing)
   - Windows 10 (endpoint target)
   - Ubuntu Server (basic service host)
-  - Security Onion or Wazuh (SIEM/log analysis, in progress)
+  - Security Onion or Wazuh (SIEM/log analysis — in progress)
 
-- **Network Configuration**:  
-  - NAT + Host-Only Adapter  
+- **Network Configuration**:
+  - NAT + Host-Only Adapter
   - Isolated internal lab network for traffic inspection
 
 ---
 
 ## 🧰 Tools Used
 
-### Networking & Monitoring  
+### 🛰️ Networking & Monitoring  
 - Wireshark  
 - Suricata  
 - TCPDump  
 
-### Endpoint & Systems  
+### 💻 Endpoint & Systems  
 - Windows 10/11  
 - Ubuntu / Kali Linux  
 - PowerShell & Bash  
 
-### SIEM / Security  
-- Wazuh (in progress)  
-- Splunk Free (planned)  
-- Sysmon + Windows Event Viewer
+### 🔐 SIEM & Security  
+- Wazuh *(in progress)*  
+- Splunk Free *(planned)*  
+- Sysmon + Event Viewer
 
 ---
 
-## 🔐 Skills Practiced
+## 🛠️ Skills Practiced
 
 - Virtual machine management  
 - Secure network design & segmentation  
 - Incident simulation & detection  
-- Packet capture & log analysis  
+- Packet capture & traffic analysis  
 - Basic red/blue team workflows  
 - Windows and Linux hardening  
 - Threat documentation & reporting
 
 ---
 
-## 📸 Screenshots (Coming Soon)
+## 📸 Screenshots
 
-I’ll be adding screenshots of my network setup, VM configurations, packet captures, and log dashboards as the lab evolves.
+Screenshots are included in individual project folders and lab writeups (see below). They include VM setup, network scans, Wireshark filters, and packet capture views.
 
 ---
 
 ## 📂 Projects
 
 - [Wireshark TCP SYN Scan Analysis](./wireshark-scan-analysis.md)  
-  Performed a basic TCP SYN scan using Nmap, captured network traffic with Wireshark, and analyzed TCP handshake behavior in a virtualized lab environment.
+  Performed a basic TCP SYN scan using Nmap, captured network traffic with Wireshark, and analyzed TCP handshake behavior between isolated virtual machines.
 
 ---
 
@@ -79,3 +78,4 @@ I’ll be adding screenshots of my network setup, VM configurations, packet capt
 - Set up centralized log collection  
 - Simulate phishing attack + detection  
 - Create a writeup on incident response from a simulated compromise
+
