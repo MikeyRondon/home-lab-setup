@@ -12,55 +12,131 @@ To install and configure Sysmon on a Windows 10 virtual machine and analyze logs
 
 ## 🧪 Lab Environment
 
-- **Windows 10 VM** (Target)
-  - Fresh install with NAT + Host-Only adapters
-  - Sysmon installed with SwiftOnSecurity configuration
+- **Windows 10 VM** (Target)  
+  - Fresh install with NAT + Host-Only adapters  
+  - Sysmon installed with SwiftOnSecurity configuration  
 
-- **Kali Linux VM** (Attacker)
-  - Used to simulate recon and basic attacks (e.g., Nmap scans, file transfer)
+- **Kali Linux VM** (Attacker)  
+  - Used to simulate recon and basic attacks (e.g., Nmap scans, file transfer)  
 
-- **Tools Used**
-  - Sysmon
-  - Event Viewer / Log Parser / Sigma (optional)
-  - Wireshark / Nmap (for cross-reference)
+- **Tools Used**  
+  - Sysmon  
+  - Event Viewer  
+  - PowerShell  
+  - Python3 (for HTTP server on Kali)  
+  - Nmap (optional)
 
 ---
 
 ## 🛠️ Steps
 
-1. ✅ Download and install Sysmon from Microsoft Sysinternals  
-2. ✅ Apply SwiftOnSecurity Sysmon configuration  
-3. ✅ Validate Sysmon is logging to Event Viewer (Event ID 1, 3, etc.)  
-4. ✅ Simulate basic attacker behavior from Kali:
-   - Run Nmap scan from Kali to Windows
-   - (Optional) Transfer script or binary and execute
-5. ✅ Open Event Viewer and filter for relevant Sysmon Event IDs
-6. ✅ Document observed events (e.g., process creation, network connections)
-7. ✅ Correlate activity with timeline of simulated attack
+1. ✅ Installed Sysmon on Windows VM
+2. ✅ Applied SwiftOnSecurity configuration
+3. ✅ Confirmed Sysmon logs to Event Viewer
+4. ✅ Simulated activity: process creation, DNS queries, web requests
+5. ✅ Captured and reviewed Event IDs 1, 3, and 22
+6. ✅ Documented logs and screenshots
 
 ---
 
 ## 🧠 Key Event IDs
 
-| Event ID | Description                    |
-|----------|--------------------------------|
-| 1        | Process creation               |
-| 3        | Network connection             |
-| 7        | Image loaded                   |
-| 11       | File creation                  |
-| 22       | DNS query                      |
+| Event ID | Description          |
+|----------|----------------------|
+| 1        | Process Creation     |
+| 3        | Network Connection   |
+| 22       | DNS Query            |
+
+---
+
+## 🔍 Simulated Events and Observations
+
+### 🔹 Process Creation – Notepad (Event ID 1)
+
+```powershell
+Start-Process notepad
+```
+## 🔍 Simulated Events and Observations
+
+### 🔹 Process Creation – Notepad (Event ID 1)
+
+```powershell
+Start-Process notepad
+```
+Sysmon successfully logged this as Event ID 1.
+
+Captured the full command line, hash values, and parent process (PowerShell).
+
+📸 Screenshots:
+
+PowerShell command
+
+Event Viewer showing Event ID 1
+
+🔹 DNS Query via nslookup – Logged as Event ID 3
+powershell
+Copy
+Edit
+nslookup google.com
+Expected Event ID 22 (DNS query), but received Event ID 3 (network connection to DNS server).
+
+Likely due to default Sysmon config suppressing DNS logs.
+
+📸 Screenshots:
+
+PowerShell nslookup output
+
+Event Viewer showing Event ID 3 (nslookup.exe to 10.0.2.3:53)
+
+🔹 Outbound HTTP Request to Kali – Logged as Event ID 22
+powershell
+Copy
+Edit
+Invoke-WebRequest http://192.168.56.101
+Used Kali's Python HTTP server (python3 -m http.server 80)
+
+PowerShell successfully connected and returned HTML.
+
+Sysmon logged a DNS query from PowerShell (Event ID 22), but did not log Event ID 3.
+
+Likely filtered out by SwiftOnSecurity config.
+
+📸 Screenshots:
+
+Kali terminal showing incoming request
+
+PowerShell output
+
+Event Viewer showing Event ID 22 for PowerShell
+
+## 🧠 Observations
+
+- Sysmon reliably logs **process creation** (Event ID 1).  
+- DNS queries may appear as **Event ID 3** (network connection) or **Event ID 22** (DNS query), depending on the tool used and the Sysmon config.  
+- PowerShell-initiated connections sometimes bypass **Event ID 3** logging under default configurations.  
+- Effective real-world monitoring requires tuning Sysmon rules for full network visibility and endpoint telemetry.
 
 ---
 
 ## 📸 Screenshots
 
-- Sysmon config output  
-- Example logs from Event Viewer  
-- Nmap scan trigger and resulting logs  
-- Timeline of activity observed
+- Sysmon Event Viewer logs: Event ID 1, 3, and 22  
+- PowerShell session outputs  
+- Kali terminal showing incoming web connection
 
----
 
 ## ✅ Summary
 
-This lab demonstrated how Sysmon provides granular insight into endpoint behavior by logging system-level activity. By simulating basic attack scenarios from Kali Linux and reviewing the logs in Event Viewer, I was able to identify key events tied to scanning, network access, and process execution. Future steps include forwarding logs to a SIEM (Wazuh) and testing real-time alerting workflows.
+This lab demonstrates how Sysmon provides deep insight into Windows endpoint behavior.  
+By simulating activity such as process launches, DNS lookups, and outbound HTTP connections,  
+I was able to examine how and when different events are captured — and what may be filtered by default.
+
+---
+
+### 🧭 Next Steps
+
+- Integrate Sysmon logs into a SIEM (e.g., Wazuh)  
+- Test alert generation using detection rules (e.g., Sigma)  
+- Write incident-style summaries for log analysis practice
+
+
