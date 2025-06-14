@@ -60,47 +60,56 @@ Sysmon successfully logged this as Event ID 1.
 
 Captured the full command line, hash values, and parent process (PowerShell).
 
-📸 Screenshots:
+### 📸 Screenshots
 
-PowerShell command
+#### PowerShell – Launching Notepad  
+![PowerShell Notepad Command](./screenshots/PS%20NP%20Proj.2.PNG)
 
-Event Viewer showing Event ID 1
+#### Event Viewer – Event ID 1 (Process Creation)  
+![Sysmon Event ID 1 – Notepad](./screenshots/EV%20ID%201%20NP%20proj.2.PNG)
 
-🔹 DNS Query via nslookup – Logged as Event ID 3
-powershell
-Copy
-Edit
+### 🔹 DNS Query via nslookup – Logged as Event ID 3
+```powershell
 nslookup google.com
+```
 Expected Event ID 22 (DNS query), but received Event ID 3 (network connection to DNS server).
 
-Likely due to default Sysmon config suppressing DNS logs.
+Likely due to default Sysmon config suppressing DNS logs for certain tools like `nslookup`
 
-📸 Screenshots:
+### 📸 Screenshots
 
-PowerShell nslookup output
+#### PowerShell `nslookup` Output  
+![PowerShell nslookup](./screenshots/NS%20LOOKUP%20DNS%20Query%20ID%2022%20proj.2.PNG)
 
-Event Viewer showing Event ID 3 (nslookup.exe to 10.0.2.3:53)
+#### Event Viewer – Event ID 3 from `nslookup.exe`  
+![Event ID 3 – nslookup DNS connection](./screenshots/EV%20DNS%20ID%203%20no%20ID%2022.PNG)
 
-🔹 Outbound HTTP Request to Kali – Logged as Event ID 22
-powershell
-Copy
-Edit
+### 🔹 Outbound HTTP Request to Kali – Logged as Event ID 22
+
+```powershell
 Invoke-WebRequest http://192.168.56.101
-Used Kali's Python HTTP server (python3 -m http.server 80)
+```
+Used Kali's Python HTTP server 
+```bash
+python3 -m http.server 80
+```
+PowerShell successfully connected to the server and returned a directory listing in HTML.
 
-PowerShell successfully connected and returned HTML.
+Sysmon logged this activity as a **DNS query (Event ID 22)** initiated by `powershell.exe`.
 
-Sysmon logged a DNS query from PowerShell (Event ID 22), but did not log Event ID 3.
+However, **Event ID 3 (network connection)** was not recorded — likely filtered out by the default **SwiftOnSecurity** Sysmon configuration.
 
-Likely filtered out by SwiftOnSecurity config.
+### 📸 Screenshots
 
-📸 Screenshots:
+#### Kali terminal showing incoming request  
+![Kali HTTP Server](./screenshots/Kali%20Basic%20web%20listener%20proj.2.PNG)
 
-Kali terminal showing incoming request
+#### PowerShell output  
+![PowerShell Web Request](./screenshots/Windows%20WebRequest%20proj.2.PNG)
 
-PowerShell output
+#### Event Viewer showing Event ID 22 for PowerShell  
+![Event ID 22 - PowerShell](./screenshots/EV%20id%2022%20no%20ID3.PNG)
 
-Event Viewer showing Event ID 22 for PowerShell
 
 ## 🧠 Observations
 
@@ -113,9 +122,27 @@ Event Viewer showing Event ID 22 for PowerShell
 
 ## 📸 Screenshots
 
-- Sysmon Event Viewer logs: Event ID 1, 3, and 22  
-- PowerShell session outputs  
-- Kali terminal showing incoming web connection
+#### 🧾 Event Viewer – Sysmon Logs
+- **Event ID 1 – Notepad**
+  ![Event ID 1 – Notepad](./screenshots/EV%20ID%201%20NP%20proj.2.PNG)
+
+- **Event ID 3 – nslookup DNS connection**
+  ![Event ID 3 – nslookup](./screenshots/EV%20DNS%20ID%203%20no%20ID%2022.PNG)
+
+- **Event ID 22 – PowerShell DNS Query**
+  ![Event ID 22 – PowerShell](./screenshots/EV%20id%2022%20no%20ID3.PNG)
+
+#### 💻 PowerShell Output
+- **Notepad Process Launch**
+  ![PowerShell Start-Process](./screenshots/PS%20NP%20Proj.2.PNG)
+
+- **Invoke-WebRequest Output**
+  ![PowerShell WebRequest](./screenshots/Windows%20WebRequest%20proj.2.PNG)
+
+#### 🖥️ Kali Terminal – HTTP Connection
+- **Kali Receiving Request**
+  ![Kali Web Server](./screenshots/Kali%20Basic%20web%20listener%20proj.2.PNG)
+
 
 
 ## ✅ Summary
