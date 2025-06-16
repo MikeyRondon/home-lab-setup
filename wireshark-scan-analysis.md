@@ -15,7 +15,7 @@ To observe and analyze the packet-level behavior of a basic TCP SYN scan perform
 - **Kali Linux (Attacker)**  
   - OS: Kali 2025.2  
   - Tools: Nmap, Wireshark  
-  - IP: `192.168.56.101`
+  - IP: `192.168.56.103`
 
 - **Windows 10 (Target)**  
   - Clean installation  
