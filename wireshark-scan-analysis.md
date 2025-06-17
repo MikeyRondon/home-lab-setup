@@ -83,11 +83,11 @@ Not shown: 1000 filtered tcp ports (no-response)
 ## 🔬 Wireshark Analysis
 
 - Applied display filter:  
-  'tcp.flags.syn == 1 && tcp.flags.ack == 0'  
+  ```tcp.flags.syn == 1 && tcp.flags.ack == 0```  
   → Confirmed SYN packets were sent from Kali (`192.168.56.103`) to Windows (`192.168.56.102`)
 
 - Applied response filter:  
-  'ip.src == 192.168.56.102 && tcp'  
+  ```ip.src == 192.168.56.102 && tcp```  
   → No packets were returned from Windows
 
 This confirms the scan behavior reported by Nmap: the target silently dropped the packets — likely due to the default Windows firewall.
