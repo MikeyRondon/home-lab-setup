@@ -45,17 +45,23 @@ nmap -sS -T4 -p 1-1000 192.168.56.102
 
 ## 📸 Screenshots
 
-1. **Windows IP Configuration (`ipconfig`)**  
-   `./screenshots/ipconfig on windows.PNG`
+### Windows IP Configuration 
+`ipconfig`
+![Windows IP Config](./screenshots/windows_ipconfig.PNG)
 
-2. **Kali Network Interfaces (`ip a`)**  
-   `./screenshots/output IP A on Kali.PNG`
+### Kali Network Interfaces 
+`ip a`
+![Kali IP A](./screenshots/kali_ip_a.PNG)
 
-3. **Nmap Scan Output**  
-   `./screenshots/nmap scan.PNG`
+### Nmap Scan Output
+![Nmap Scan Output](./screenshots/nmap_scan_output.PNG)
 
-4. **Wireshark SYN Packet Filter View**  
-   `./screenshots/Wire shark display filter.PNG`
+### Wireshark Capture Start (Optional)
+![Wireshark Start](./screenshots/wireshark_capture_start.PNG)
+
+### Wireshark SYN Packet Filter View
+![Wireshark SYN Packets](./screenshots/wireshark_syn_packets.PNG)
+
 
 ---
 
