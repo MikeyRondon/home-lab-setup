@@ -1,189 +1,196 @@
 # 📊 Sysmon Log Analysis Lab
 
-> 📝 This project explores Windows event logging using Sysmon to detect and document suspicious activity such as scans, execution of binaries, and network events.
+> 📝 This project explores Windows event logging using Sysmon to detect and document suspicious activity such as scans, execution of binaries, network connections, DNS queries, file creation, process access, and image loads.
 
 ---
 
 ## 🎯 Objective
 
-To install and configure Sysmon on a Windows 10 virtual machine and analyze logs generated during controlled simulations of common attacker behavior (e.g., port scans, script execution). The goal is to understand how Sysmon enhances visibility into endpoint behavior.
-
----
-
-## 🧪 Lab Environment
-
-- **Windows 10 VM** (Target)  
-  - Fresh install with NAT + Host-Only adapters  
-  - Sysmon installed with SwiftOnSecurity configuration  
-
-- **Kali Linux VM** (Attacker)  
-  - Used to simulate recon and basic attacks (e.g., Nmap scans, file transfer)  
-
-- **Tools Used**  
-  - Sysmon  
-  - Event Viewer  
-  - PowerShell  
-  - Python3 (for HTTP server on Kali)  
-  - Nmap (optional)
-
----
-
-## 🛠️ Steps
-
-1. ✅ Installed Sysmon on Windows VM
-2. ✅ Applied SwiftOnSecurity configuration
-3. ✅ Confirmed Sysmon logs to Event Viewer
-4. ✅ Simulated activity: process creation, DNS queries, web requests
-5. ✅ Captured and reviewed Event IDs 1, 3, and 22
-6. ✅ Documented logs and screenshots
-
----
-
-## 🧠 Key Event IDs
-
-| Event ID | Description          |
-|----------|----------------------|
-| 1        | Process Creation     |
-| 3        | Network Connection   |
-| 22       | DNS Query            |
+To install and configure Sysmon on a Windows 10 virtual machine and analyze logs generated during controlled simulations of common attacker behavior. The goal is to understand how Sysmon enhances visibility into endpoint behavior.
 
 ---
 
 ## 🔍 Simulated Events and Observations
 
-### 🔹 Process Creation – Notepad (Event ID 1)
+### 🔹 Process Creation – Calculator (Event ID 1)
 
-```powershell
-Start-Process notepad
-```
-Sysmon successfully logged this as Event ID 1.
+```powershell  
+Start-Process calc.exe  
+```  
 
-Captured the full command line, hash values, and parent process (PowerShell).
+Sysmon logged this as Event ID 1, capturing `CommandLine`, `ParentProcessName`, and `Hashes`.
 
-### 📸 Screenshots
+#### 📸 Screenshots
 
-#### PowerShell – Launching Notepad  
-![PowerShell Notepad Command](./screenshots/PS%20NP%20Proj.2.PNG)
-
-#### Event Viewer – Event ID 1 (Process Creation)  
-![Sysmon Event ID 1 – Notepad](./screenshots/EV%20ID%201%20NP%20proj.2.PNG)
-
-### 🔹 DNS Query via nslookup – Logged as Event ID 3
-```powershell
-nslookup google.com
-```
-Expected Event ID 22 (DNS query), but received Event ID 3 (network connection to DNS server).
-
-Likely due to default Sysmon config suppressing DNS logs for certain tools like `nslookup`
-
-### 📸 Screenshots
-
-#### PowerShell `nslookup` Output  
-![PowerShell nslookup](./screenshots/NS%20LOOKUP%20DNS%20Query%20ID%2022%20proj.2.PNG)
-
-#### Event Viewer – Event ID 3 from `nslookup.exe`  
-![Event ID 3 – nslookup DNS connection](./screenshots/EV%20DNS%20ID%203%20no%20ID%2022.PNG)
-
-### 🔹 Outbound HTTP Request to Kali – Logged as Event ID 22
-
-```powershell
-Invoke-WebRequest http://192.168.56.101
-```
-Used Kali's Python HTTP server 
-```bash
-python3 -m http.server 80
-```
-PowerShell successfully connected to the server and returned a directory listing in HTML.
-
-Sysmon logged this activity as a **DNS query (Event ID 22)** initiated by `powershell.exe`.
-
-However, **Event ID 3 (network connection)** was not recorded — likely filtered out by the default **SwiftOnSecurity** Sysmon configuration.
-
-### 📸 Screenshots
-
-#### Kali terminal showing incoming request  
-![Kali HTTP Server](./screenshots/Kali%20Basic%20web%20listener%20proj.2.PNG)
-
-#### PowerShell output  
-![PowerShell Web Request](./screenshots/Windows%20WebRequest%20proj.2.PNG)
-
-#### Event Viewer showing Event ID 22 for PowerShell  
-![Event ID 22 - PowerShell](./screenshots/EV%20id%2022%20no%20ID3.PNG)
-
-### 🔹 File Creation – Event ID 11
-
-```powershell
-New-Item -Path C:\Users\Public\sysmon-lab-test.txt -ItemType File
-```
-
-Sysmon successfully logged this action as **Event ID 11**, indicating a file was created by `powershell.exe`.
-
-The event captured the full **TargetFilename**, **Image path**, and **Process ID**, providing insight into endpoint-level file activity.
-
-This demonstrates how Sysmon tracks file creation by specific executables, which can be crucial for detecting suspicious script behavior or lateral movement.
+![PowerShell – Launching Calculator](./screenshots/PS Command Line Calc.PNG)  
+![Event Viewer – Event ID 1 Details](./screenshots/EV ID 1.PNG)
 
 ---
 
-### 📸 Screenshots
+### 🔹 Network Connection – Test-NetConnection (Event ID 3)
 
-#### PowerShell – File Creation Command  
-![PowerShell File Creation](./screenshots/PS%20FileCreate%20proj.2.PNG)
+```powershell  
+Test-NetConnection -ComputerName example.com -Port 80  
+```  
 
-#### Event Viewer – Event ID 11 Logged  
-![Sysmon Event ID 11 – File Creation](./screenshots/EV%20ID%2011%20FileCreate%20proj.2.PNG)
+Logged as Event ID 3, showing `SourceIp`, `DestinationIp`, and `Protocol`.
 
+#### 📸 Screenshots
 
-## 🧠 Observations
-
-- Sysmon reliably logs **process creation** (Event ID 1) and provides detailed metadata like parent-child relationships and hashes.
-- **DNS activity** can appear as either Event ID 3 or 22 depending on the command used and the active configuration.
-- **PowerShell web requests** were logged under Event ID 22, but did not always trigger Event ID 3 — likely due to filtering in the SwiftOnSecurity config.
-- **File creation** (Event ID 11) was not logged under the default configuration until a minimal test config was applied, highlighting how **Sysmon's effectiveness depends heavily on how it's configured**.
-- For accurate endpoint monitoring, custom or expanded configs are essential — especially for detecting attacker behaviors like script-based file drops or silent connections.
+![PowerShell NetConnection Test](./screenshots/PS CL Network Connection.PNG)  
+![Event Viewer – Event ID 3 Details](./screenshots/EV ID 3.PNG)
 
 ---
 
-## 📸 Screenshots
+### 🔹 DNS Query – Resolve-DnsName (Event ID 22)
 
-#### 🧾 Event Viewer – Sysmon Logs
-- **Event ID 1 – Notepad**
-  ![Event ID 1 – Notepad](./screenshots/EV%20ID%201%20NP%20proj.2.PNG)
+```powershell  
+Resolve-DnsName microsoft.com  
+```  
 
-- **Event ID 3 – nslookup DNS connection**
-  ![Event ID 3 – nslookup](./screenshots/EV%20DNS%20ID%203%20no%20ID%2022.PNG)
+Captured as Event ID 22, with `QueryName`, `QueryResults`, and `DestinationIp`.
 
-- **Event ID 22 – PowerShell DNS Query**
-  ![Event ID 22 – PowerShell](./screenshots/EV%20id%2022%20no%20ID3.PNG)
+#### 📸 Screenshots
 
-#### 💻 PowerShell Output
-- **Notepad Process Launch**
-  ![PowerShell Start-Process](./screenshots/PS%20NP%20Proj.2.PNG)
+![PowerShell DNS Query](./screenshots/PS CL DNS Query.PNG)  
+![Event Viewer – Event ID 22 Details](./screenshots/EV ID 22.PNG)
 
-- **Invoke-WebRequest Output**
-  ![PowerShell WebRequest](./screenshots/Windows%20WebRequest%20proj.2.PNG)
+---
 
-#### 🖥️ Kali Terminal – HTTP Connection
-- **Kali Receiving Request**
-  ![Kali Web Server](./screenshots/Kali%20Basic%20web%20listener%20proj.2.PNG)
+### 🔹 File Creation – Sysmon Test File (Event ID 11)
 
+#### 1) PowerShell File Creation (No Event Logged)
 
+```powershell  
+New-Item -Path C:\Users\Public\sysmon_file_lab.txt -ItemType File  
+```  
+
+**Observation:** No Event ID 11 appeared—indicating the default config filtered out this action.
+
+##### 📸 Screenshots
+
+![PowerShell File Creation (no Event 11)](./screenshots/PS CL File creation 1.PNG)  
+![Event Viewer – No Event ID 11 Logged](./screenshots/1 NO Result EV ID 11.PNG)
+
+---
+
+#### 2) File Download via Microsoft Edge (Event ID 11)
+
+![Download ProcDump](./screenshots/ProcDump Download.PNG)  
+![Edge Download Completion](./screenshots/EV ID 11 Download using MSEDGE.PNG)
+
+Logged as Event ID 11, capturing `TargetFilename` and `Image`.
+
+##### 📸 Screenshots
+
+![Event Viewer – Event ID 11 Details](./screenshots/EV ID 11.PNG)
+
+---
+
+### 🔹 Process Access – ProcDump to Notepad (Event ID 10)
+
+```powershell  
+# Spawn SYSTEM shell via PsExec  
+.\PsExec.exe -accepteula -s -i powershell.exe  
+# In SYSTEM shell:  
+cd C:\Users\Labuser\Downloads  
+.\ProcDump.exe -accepteula -ma notepad C:\Temp\notepad.dmp  
+```  
+
+Logged as Event ID 10, capturing `SourceImage`, `TargetImage`, `GrantedAccess`, and `CallTrace`.
+
+#### 📸 Screenshots
+
+![SYSTEM shell ProcDump invocation & success](./screenshots/SYSTEM PS CL Procdump Invocation and success.PNG)  
+![Verify dump file exists](./screenshots/PS CL Verify Dump.PNG)  
+![Event Viewer – Event ID 10 Details](./screenshots/EV ID 10.PNG)
+
+---
+
+### 🔹 Image Load – CMD Launch (Event ID 7)
+
+```powershell  
+Start-Process cmd.exe  
+```  
+
+Logged as Event ID 7, capturing `ImageLoaded`, `Hashes`, `ImageSize`, and `Signed`.
+
+#### 📸 Screenshots
+
+![PowerShell – Launching CMD](./screenshots/PS CL image load.PNG)  
+![Event Viewer – Event ID 7 Details](./screenshots/EV ID 7.PNG)
+
+---
+
+## 🧠 Final Observations
+
+### 1. Compare Metadata
+- **Common fields:** `UtcTime`, `ProcessGuid`/`ProcessId`, `Image`/`SourceImage`/`TargetImage`  
+- **Unique fields:**  
+  - Event 3: `SourceIp`, `DestinationIp`, `Protocol`  
+  - Event 22: `QueryName`, `QueryResults`  
+  - Event 11: `TargetFilename`  
+  - Event 10: `GrantedAccess`, `CallTrace`  
+  - Event 7: `ImageLoaded`, `Hashes`, `ImageSize`, `Signed`
+
+### 2. Identify Gaps
+- Outbound HTTP requests didn’t always generate Event ID 3 under default rules.  
+- Simple PowerShell file creation was filtered out until download actions triggered Event ID 11.  
+- No `CallTrace` until enabled in config.  
+- `SignatureStatus` missing for some signed images.
+
+### 3. Detection Potential
+- **Event 1:** Alert on unknown or unsigned executables.  
+- **Event 10:** Alert when `TargetImage=lsass.exe` or high-memory access flags.  
+- **Event 22:** Alert on DNS queries to suspicious domains.  
+- **Event 7:** Alert on unsigned DLL loads in critical processes.
+
+### 4. Documentation
+
+#### Event ID 1 – Process Creation
+- **Command:** `Start-Process calc.exe`  
+- **Timestamp:** 6/17/2025 4:27:43 PM (from EV ID 1 screenshot)  
+- **Anomalies:** None
+
+#### Event ID 3 – Network Connection
+- **Command:** `Test-NetConnection -ComputerName example.com -Port 80`  
+- **Timestamp:** 6/17/2025 4:43:51 PM (from EV ID 3 screenshot)  
+- **Anomalies:** None
+
+#### Event ID 22 – DNS Query
+- **Command:** `Resolve-DnsName microsoft.com`  
+- **Timestamp:** 6/17/2025 4:51:44 PM (from EV ID 22 screenshot)  
+- **Anomalies:** None
+
+#### Event ID 11 – File Creation
+- **Command:** `New-Item -Path C:\Users\Public\sysmon_file_lab.txt -ItemType File`  
+- **Timestamp:** 6/17/2025 4:54:00 PM (approx, from PowerShell screenshot)  
+- **Anomalies:** No Event 11 logged for simple PS file creation under default config  
+- **Command:** Download ProcDump via Edge  
+- **Timestamp:** 6/17/2025 5:02:54 PM (from EV ID 11 screenshot)  
+- **Anomalies:** Logged as Event 11 by `msedge.exe`
+
+#### Event ID 10 – Process Access
+- **Command:**  
+  1. `.\PsExec.exe -accepteula -s -i powershell.exe`  
+  2. `.\ProcDump.exe -accepteula -ma notepad C:\Temp\notepad.dmp`  
+- **Timestamp:** 6/17/2025 5:58:16 PM (from EV ID 10 screenshot)  
+- **Anomalies:** None
+
+#### Event ID 7 – Image Load
+- **Command:** `Start-Process cmd.exe`  
+- **Timestamp:** 6/17/2025 6:43:22 PM (from EV ID 7 screenshot)  
+- **Anomalies:** None
+
+---
 
 ## ✅ Summary
 
-This lab demonstrates how Sysmon provides deep visibility into endpoint activity, from process creation and network behavior to DNS queries and file creation.
-
-By simulating common system actions — like launching applications, performing DNS lookups, making web requests, and creating files — we tested how Sysmon detects and logs these events.
-
-We also observed that Sysmon’s default or community configurations (like SwiftOnSecurity’s) may filter out important events like file creation unless explicitly configured.
-
-These findings underscore the importance of using custom or minimal configs in lab environments for full visibility, especially when preparing for threat detection and SIEM integration work.
+This lab demonstrates how Sysmon’s detailed event logging across process, network, DNS, file, handle-access, and image-load events provides comprehensive endpoint visibility. Tuning the configuration is critical to ensure you capture high-fidelity data for threat detection and SIEM integration.
 
 ---
 
-**Next steps:**
-- Forward Sysmon logs to a SIEM (e.g., Wazuh)
-- Trigger and test alerts using detection rules (e.g., Sigma)
-- Write incident-style summaries based on real event log data
-
-
-
+**Next steps:**  
+- Forward Sysmon logs to Wazuh  
+- Create Sigma detection rules  
+- Draft incident-style summaries based on these events  
