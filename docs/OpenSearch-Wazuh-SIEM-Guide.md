@@ -6,14 +6,15 @@
 2. [Architecture](#architecture)
 3. [Prerequisites](#prerequisites)
 4. [Setup Steps](#setup-steps)
+
    * [1. Add OpenSearch Repos & Keys](#2-add-opensearch-repos--keys)
    * [2. Install & Configure OpenSearch](#3-install--configure-opensearch)
    * [3. Install & Configure OpenSearch Dashboards](#4-install--configure-opensearch-dashboards)
    * [4. Install the Wazuh Dashboard Plugin](#5-install-the-wazuh-dashboard-plugin)
    * [5. Enroll Windows Sysmon Agent](#6-enroll-windows-sysmon-agent)
    * [6. Verify Events in Wazuh](#7-verify-events-in-wazuh)
-5. [Screenshots](#screenshots)
-6. [Lessons Learned](#lessons-learned)
+6. [Screenshots](#screenshots)
+7. [Lessons Learned](#lessons-learned)
 
 ---
 
