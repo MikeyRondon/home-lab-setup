@@ -6,14 +6,12 @@
 2. [Architecture](#architecture)
 3. [Prerequisites](#prerequisites)
 4. [Setup Steps](#setup-steps)
-
-   * [1. Remove Elasticsearch & Kibana](#1-remove-elasticsearch--kibana)
-   * [2. Add OpenSearch Repos & Keys](#2-add-opensearch-repos--keys)
-   * [3. Install & Configure OpenSearch](#3-install--configure-opensearch)
-   * [4. Install & Configure OpenSearch Dashboards](#4-install--configure-opensearch-dashboards)
-   * [5. Install the Wazuh Dashboard Plugin](#5-install-the-wazuh-dashboard-plugin)
-   * [6. Enroll Windows Sysmon Agent](#6-enroll-windows-sysmon-agent)
-   * [7. Verify Events in Wazuh](#7-verify-events-in-wazuh)
+   * [1. Add OpenSearch Repos & Keys](#2-add-opensearch-repos--keys)
+   * [2. Install & Configure OpenSearch](#3-install--configure-opensearch)
+   * [3. Install & Configure OpenSearch Dashboards](#4-install--configure-opensearch-dashboards)
+   * [4. Install the Wazuh Dashboard Plugin](#5-install-the-wazuh-dashboard-plugin)
+   * [5. Enroll Windows Sysmon Agent](#6-enroll-windows-sysmon-agent)
+   * [6. Verify Events in Wazuh](#7-verify-events-in-wazuh)
 5. [Screenshots](#screenshots)
 6. [Lessons Learned](#lessons-learned)
 
@@ -58,15 +56,7 @@ This guide walks through deploying a home-lab SIEM using OpenSearch, OpenSearch 
 
 ## Setup Steps
 
-### 1. Remove Elasticsearch & Kibana
-
-```bash
-sudo systemctl stop kibana elasticsearch
-sudo apt remove --purge -y kibana elasticsearch elasticsearch-oss kibana-oss
-sudo apt autoremove -y
-```
-
-### 2. Add OpenSearch Repos & Keys
+### 1. Add OpenSearch Repos & Keys
 
 ```bash
 # Import GPG key
@@ -86,13 +76,13 @@ EOF
 sudo apt update
 ```
 
-### 3. Install & Configure OpenSearch
+### 2. Install & Configure OpenSearch
 
 ```bash
 sudo apt install -y opensearch
 
 # Bind to all interfaces
-sudo sed -i 's/#network\.host:.*/network.host: 0.0.0.0/' /etc/opensearch/opensearch.yml
+sudo sed -i 's/#network\.host:.*/network.host: 0.0.0.0/' /etc/opensearch/opensearch\.yml
 
 sudo systemctl enable opensearch.service
 sudo systemctl start opensearch.service
@@ -100,18 +90,16 @@ sudo systemctl start opensearch.service
 curl -I http://localhost:9200   # expect HTTP/1.1 200 OK
 ```
 
-### 4. Install & Configure OpenSearch Dashboards
+### 3. Install & Configure OpenSearch Dashboards
 
 ```bash
 sudo apt install -y opensearch-dashboards
 
 # Bind to all interfaces
-sudo sed -i 's/#server\.host:.*/server.host: "0.0.0.0"/' \
-  /etc/opensearch-dashboards/opensearch_dashboards.yml
+sudo sed -i 's/#server\.host:.*/server.host: "0.0.0.0"/'   /etc/opensearch-dashboards/opensearch_dashboards\.yml
 
 # Point to local OpenSearch
-sudo sed -i 's|#opensearch\.hosts:.*|opensearch.hosts: ["http://localhost:9200"]|' \
-  /etc/opensearch-dashboards/opensearch_dashboards.yml
+sudo sed -i 's|#opensearch\.hosts:.*|opensearch.hosts: ["http://localhost:9200"]|'   /etc/opensearch-dashboards/opensearch_dashboards\.yml
 
 sudo systemctl enable opensearch-dashboards.service
 sudo systemctl restart opensearch-dashboards.service
@@ -119,7 +107,7 @@ sudo systemctl restart opensearch-dashboards.service
 curl -I http://127.0.0.1:5601  # expect HTTP/1.1 200 OK
 ```
 
-### 5. Install the Wazuh Dashboard Plugin
+### 4. Install the Wazuh Dashboard Plugin
 
 ```bash
 sudo apt install -y wazuh-dashboard
@@ -128,7 +116,7 @@ sudo systemctl restart opensearch-dashboards.service
 ls -l /usr/share/opensearch-dashboards/plugins | grep wazuh
 ```
 
-### 6. Enroll Windows Sysmon Agent
+### 5. Enroll Windows Sysmon Agent
 
 ```bash
 # On Ubuntu manager
@@ -151,7 +139,7 @@ msiexec /i https://packages.wazuh.com/4.x/windows/wazuh-agent-4.12.0-1.msi ^
 Restart-Service wazuh-agent
 ```
 
-### 7. Verify Events in Wazuh
+### 6. Verify Events in Wazuh
 
 * Open your host browser to `http://192.168.56.xxx:5601/app/wazuh`
 * Click the **shield icon (Wazuh)** in the sidebar
@@ -174,6 +162,11 @@ Place screenshots in `/docs/screenshots/` and reference them here:
 * Pivoted from Elasticsearch/Kibana due to plugin version conflicts with Wazuh 4.12
 * OpenSearch Dashboards provides native support and removes compatibility headaches
 * Real-world troubleshooting: DNS fixes, network binding, package versions
+
+---
+
+*End of guide*
+
 
 ---
 
