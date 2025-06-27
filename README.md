@@ -78,8 +78,8 @@ Screenshots are included in individual project folders and lab writeups (see bel
 - [Home Lab Architecture Overview](./setup-overview.md)  
   Breakdown of host specs, VM layout, and network segmentation for the lab.
 
-- [OpenSearch & Wazuh SIEM Guide](./docs/OpenSearch-Wazuh-SIEM-Guide.md)  
-  End-to-end guide: deploy OpenSearch & Dashboards, install Wazuh manager, enroll Sysmon agent, and visualize events.
+- 📊 [OpenSearch & Wazuh SIEM Guide](./docs/OpenSearch-Wazuh-SIEM-Guide.md)  
+  End-to-end walkthrough for standing up a home-lab SIEM with OpenSearch, Dashboards, Wazuh manager, and a Windows Sysmon agent.
 
 ---
 
