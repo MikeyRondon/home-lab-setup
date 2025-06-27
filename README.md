@@ -4,6 +4,7 @@ My personal cybersecurity lab using virtual machines and open-source tools.
 
 This project documents the setup and use of my home cybersecurity lab, designed for hands-on learning in IT support, networking, and SOC analyst skills. It includes system configurations, threat simulations, traffic analysis, and writeups for real-world tools.
 
+**Documentation** for deeper dives lives under `docs/`—including an OpenSearch & Wazuh SIEM guide.
 ---
 
 ## 🎯 Objective
@@ -76,7 +77,8 @@ Screenshots are included in individual project folders and lab writeups (see bel
 - [Home Lab Architecture Overview](./setup-overview.md)  
   Breakdown of host specs, VM layout, network segmentation, and tool selection used to build my home cybersecurity lab.
 
-
+- [OpenSearch & Wazuh SIEM Guide](./docs/OpenSearch-Wazuh-SIEM-Guide.md)
+  End-to-end walkthrough for standing up a home-lab SIEM: installing OpenSearch & Dashboards, deploying the Wazuh manager, enrolling a Windows Sysmon agent, and visualizing security events in the Wazuh app. 
 ---
 
 ## 🚧 In Progress
