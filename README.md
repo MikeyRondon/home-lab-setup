@@ -4,7 +4,8 @@ My personal cybersecurity lab using virtual machines and open-source tools.
 
 This project documents the setup and use of my home cybersecurity lab, designed for hands-on learning in IT support, networking, and SOC analyst skills. It includes system configurations, threat simulations, traffic analysis, and writeups for real-world tools.
 
-**Documentation** for deeper dives lives under `docs/`—including an OpenSearch & Wazuh SIEM guide.
+**Documentation** for deeper dives lives under [docs/](./docs/)—including an [OpenSearch & Wazuh SIEM Guide](./docs/OpenSearch-Wazuh-SIEM-Guide.md).
+
 ---
 
 ## 🎯 Objective
@@ -69,22 +70,22 @@ Screenshots are included in individual project folders and lab writeups (see bel
 ## 📂 Projects
 
 - [Wireshark TCP SYN Scan Analysis](./wireshark-scan-analysis.md)  
-  Performed a basic TCP SYN scan using Nmap, captured traffic with Wireshark, and analyzed packet flow between isolated virtual machines.
+  Performed a TCP SYN scan in an isolated VM lab and analyzed packet flow with Wireshark.
 
 - [Sysmon Log Analysis](./sysmon-log-analysis.md)  
-  Installed and configured Sysmon on a Windows VM to monitor and log endpoint activity during simulated reconnaissance.
+  Configured Sysmon on Windows to log process and network events during recon simulations.
 
 - [Home Lab Architecture Overview](./setup-overview.md)  
-  Breakdown of host specs, VM layout, network segmentation, and tool selection used to build my home cybersecurity lab.
+  Breakdown of host specs, VM layout, and network segmentation for the lab.
 
-- [OpenSearch & Wazuh SIEM Guide](./docs/OpenSearch-Wazuh-SIEM-Guide.md)
-  End-to-end walkthrough for standing up a home-lab SIEM: installing OpenSearch & Dashboards, deploying the Wazuh manager, enrolling a Windows Sysmon agent, and visualizing security events in the Wazuh app. 
+- [OpenSearch & Wazuh SIEM Guide](./docs/OpenSearch-Wazuh-SIEM-Guide.md)  
+  End-to-end guide: deploy OpenSearch & Dashboards, install Wazuh manager, enroll Sysmon agent, and visualize events.
+
 ---
 
 ## 🚧 In Progress
 
-- Configure Wazuh SIEM  
-- Set up centralized log collection  
 - Simulate phishing attack + detection  
-- Create a writeup on incident response from a simulated compromise
+- Automate lab build with Terraform/Ansible  
+- Endpoint security tests
 
