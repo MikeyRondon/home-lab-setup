@@ -208,8 +208,87 @@ This lab demonstrates how Sysmon’s detailed event logging across process, netw
 
 ---
 
-**Next steps:**  
-- Forward Sysmon logs to Wazuh  
-- Create Sigma detection rules  
-- Draft incident-style summaries based on these events  
+## Forward Sysmon logs to Wazuh
 
+The following steps have been completed:
+
+1. **Generated agent registration key** on the Wazuh manager (`manage_agents` ID 001), bound to Windows VM IP `192.168.56.102`.  
+   ![manage_agents menu](screenshots/manage_agents.PNG)
+   ![manage_agents menu](screenshots/bind_ip.PNG)
+
+3. **Installed the Wazuh agent MSI (v4.12.0-1)** on the Windows VM and registered it using `agent-auth.exe`.  
+   ![MSI downloaded](screenshots/msi_dwnld_cmplt.PNG)  
+   ![MSI installer complete](screenshots/MSI.PNG)
+
+4. **Verified `agent-auth.exe`** on the Windows VM by confirming its path:  
+   `C:\Program Files (x86)\ossec-agent\agent-auth.exe`.  
+   ![program files view](screenshots/prog_files_view_ossec.PNG)
+
+5. **Started and confirmed** the Wazuh agent Windows service (`WazuhSvc`) was running.  
+   ![service name check](screenshots/wazh_srvc_name.PNG)  
+   ![service started](screenshots/start_srvc.PNG)
+
+6. **Installed Sysmon64** (v15.15.0.0) and loaded the SwiftOnSecurity configuration from:
+   `C:\Users\Labuser\Downloads\sysmonconfig-export.xml`.
+
+7. **Updated** the agent’s `ossec.conf` to include the Sysmon EventChannel:
+
+   ```xml
+   <localfile>
+     <location>Microsoft-Windows-Sysmon/Operational</location>
+     <log_format>eventchannel</log_format>
+   </localfile>
+   ```
+
+8. **Restarted the Wazuh agent service** to apply the new Sysmon settings.  
+   ![service restarted](screenshots/restart_service.PNG)
+
+9. **Verified** the agent log shows:
+   `INFO: Analyzing event log: 'Microsoft-Windows-Sysmon/Operational'`.
+   ![agent log verification](screenshots/check_agent_log.PNG)
+
+10. **Filtered Sysmon events** in the Wazuh Dashboard by:  
+- Adding a filter on `rule.groups: sysmon`  
+- Adding the `data.win.system.eventID` column to view Event IDs  
+![Sysmon event table](screenshots/sysmon_event_table.PNG)
+
+---
+
+
+## Sigma Detection Rules
+
+# Sigma rule for suspicious VaultCli.dll module loads via Sysmon
+title: Suspicious VaultCli Module Load
+id: b2e7f8d1-1234-4abc-9f00-abcdef123456
+status: experimental
+description: Detects when VaultCli.dll is loaded into a process, which may indicate credential‐vault manipulation or dumping.
+author: Mikey Rondon
+date: 2025/06/28
+references:
+  - https://github.com/SwiftOnSecurity/sysmon-config
+tags:
+  - attack.credential_access
+  - attack.T1555
+  - sysmon
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: 7
+    EventChannel: Microsoft-Windows-Sysmon/Operational
+    ImageLoaded|contains: vaultcli.dll
+  condition: selection
+fields:
+  - UtcTime
+  - Computer
+  - Image
+  - ImageLoaded
+  - ProcessGuid
+  - ProcessId
+falsepositives:
+  - Legitimate system maintenance or Windows updates that may load VaultCli.dll
+level: high
+
+**Next steps:**  
+- Draft incident-style summaries based on these events  
