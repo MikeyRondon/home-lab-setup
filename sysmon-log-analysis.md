@@ -208,7 +208,7 @@ This lab demonstrates how Sysmon’s detailed event logging across process, netw
 
 ---
 
-## Forward Sysmon logs to Wazuh
+## 📤 Forward Sysmon logs to Wazuh
 
 The following steps have been completed:
 
@@ -255,9 +255,9 @@ The following steps have been completed:
 ---
 
 
-## Sigma Detection Rules
+## 🛡️ Sigma Detection Rules
 
-# Sigma rule for suspicious VaultCli.dll module loads via Sysmon
+```yaml
 title: Suspicious VaultCli Module Load
 id: b2e7f8d1-1234-4abc-9f00-abcdef123456
 status: experimental
@@ -289,6 +289,6 @@ fields:
 falsepositives:
   - Legitimate system maintenance or Windows updates that may load VaultCli.dll
 level: high
-
+```
 **Next steps:**  
-- Draft incident-style summaries based on these events  
+- Draft incident-style summaries based on these events 
