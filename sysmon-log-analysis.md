@@ -254,8 +254,9 @@ The following steps have been completed:
 
 ---
 
+# 🛡️ Sigma Detection Rules
 
-## 🛡️ Sigma Detection Rules
+## Suspicious VaultCli Module Load
 
 ```yaml
 title: Suspicious VaultCli Module Load
@@ -290,7 +291,12 @@ falsepositives:
   - Legitimate system maintenance or Windows updates that may load VaultCli.dll
 level: high
 ```
-## Incident: Non-System DLL Load Detected
+---
+## Sysmon Image Load from Non-System Directory
+---
+
+
+# Incident: Non-System DLL Load Detected
 
 - **Date/Time:** 2025-06-30T17:26:00Z (UTC)
 - **Host:** DESKTOP-OM1C5E5 (agent ID 002, 192.168.56.104)
