@@ -309,6 +309,12 @@ level: high
   TargetFilename: C:\Temp\test.dll
   TargetFilename: C:\Temp\test.dll
   ```
+- **File Details:**
+  - SHA256: `E7B998CEB45C519E55F8542A4BE0AFD3B5B02DCA5D1E907850D1668822BF334`
+  - File description: NT Layer DLL
+  - Product name: Microsoft® Windows® Operating System
+  - File version: 10.0.19041.5794
+  
   Impact:
 Untrusted code execution could allow an adversary to load malicious binaries into trusted processes.
 
