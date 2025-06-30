@@ -290,5 +290,31 @@ falsepositives:
   - Legitimate system maintenance or Windows updates that may load VaultCli.dll
 level: high
 ```
+## Incident: Non-System DLL Load Detected
+
+- **Date/Time:** 2025-06-30T17:26:00Z (UTC)
+- **Host:** DESKTOP-OM1C5E5 (agent ID 002, 192.168.56.104)
+- **Event ID:** 7 (ImageLoaded)
+- **Rule:** Sysmon Image Load from Non-System Directory (Sigma ID: 12345678-1234-5678-1234-567812345678)
+- **Description:**  
+  A Sysmon image-load event was recorded for `C:\Temp\test.dll`, which resides outside of standard Windows system paths. This triggered our custom Sigma rule to detect potential DLL side-loading.
+- **Evidence:**  
+  ```text
+  TargetFilename: C:\Temp\test.dll
+  TargetFilename: C:\Temp\test.dll
+  ```
+  Impact:
+Untrusted code execution could allow an adversary to load malicious binaries into trusted processes.
+
+Next Steps:
+
+Investigate the source and purpose of test.dll.
+
+Review other image-load events for unexpected directories.
+
+Refine Sigma rules to whitelist known safe plugin folders.
+
+Consider blocking or alerting on execution from temporary directories.
+
 **Next steps:**  
 - Draft incident-style summaries based on these events 
