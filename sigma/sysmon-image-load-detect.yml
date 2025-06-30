@@ -1,0 +1,32 @@
+---
+title: Sysmon Image Load from Non-System Directory
+id: 12345678-1234-5678-1234-567812345678
+status: experimental
+description: Detects when Sysmon logs an image-load event (EventID 7) from a directory outside of typical system paths (possible DLL side-loading).
+author: Michael Rondon
+date: 2025-06-28
+references:
+  - https://github.com/SwiftOnSecurity/sysmon-config
+tags:
+  - attack.execution
+  - attack.t1574
+
+logsource:
+  product: windows
+  service: sysmon
+
+detection:
+  selection:
+    EventID: 7
+    ImageLoaded|contains_not:
+      - 'C:\\Windows\\System32'
+      - 'C:\\Windows\\SysWOW64'
+      - 'C:\\Program Files'
+      - 'C:\\Program Files (x86)'
+  condition: selection
+
+falsepositives:
+  - Legitimate software loading non-system DLLs (e.g., plugin architectures)
+
+level: medium
+---
