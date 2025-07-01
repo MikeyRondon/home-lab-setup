@@ -296,6 +296,7 @@ falsepositives:
 level: high
 ```
 ---
+
 ## Sysmon Image Load from Non-System Directory
 
 ```yaml
@@ -348,7 +349,7 @@ level: medium
   - SHA256: `E7B998CEB45C519E55F8542A4BE0AFD3B5B02DCA5D1E907850D1668822BF334`
   - File description: NT Layer DLL
   - Product name: Microsoft® Windows® Operating System
-  - File version: 10.0.19041.5794```
+  - File version: 10.0.19041.5794
 
 ## Detection: Temp‐Directory Execution Blocked
 
