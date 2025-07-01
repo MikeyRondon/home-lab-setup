@@ -1,0 +1,32 @@
+---
+title: Sysmon Process Execution from Temporary Directory
+id: e8f1a2b3-4c5d-6e7f-8a9b-0c1d2e3f4a5b
+status: experimental
+description: Detects process execution events originating from a user’s temporary directory, which may indicate malicious activity or fileless attacks.
+author: Mikey Rondon
+date: 2025-07-01
+references:
+  - https://docs.microsoft.com/sysinternals/downloads/sysmon
+tags:
+  - attack.execution
+  - attack.T1055
+  - sysmon
+
+logsource:
+  product: windows
+  service: sysmon
+
+detection:
+  selection:
+    EventID: 1
+    # process image path begins with user's Temp folder
+    Image|startswith:
+      - 'C:\\Users\\'
+      - '*\\AppData\\Local\\Temp\\'
+  condition: selection
+
+falsepositives:
+  - Legitimate applications that unpack or run from Temp, such as installers or updaters.
+
+level: medium
+---
