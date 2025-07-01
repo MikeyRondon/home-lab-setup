@@ -28,15 +28,15 @@ This file documents the setup steps and progress of my home cybersecurity lab. I
 - [x] Linked project in main `README.md`  
 - [x] Wrote and added `setup-overview.md` documenting lab architecture  
 - [x] Installed and configured Sysmon on Windows 10 endpoint  
-- [x] Completed Sysmon log analysis and wrote `sysmon-log-analysis.md`
+- [x] Completed Sysmon log analysis and wrote `sysmon-log-analysis.md`  
+- [x] Installed and configured Ubuntu Server for Wazuh manager  
+- [x] Deployed Wazuh as a SIEM/log aggregator  
+- [x] Configured Wazuh to collect and correlate logs  
 
 ---
 
 ## 🛠️ In Progress
 
-- [ ] Install and configure Ubuntu Server  
-- [ ] Deploy Wazuh as a SIEM/log aggregator  
-- [ ] Configure Wazuh to collect and correlate logs  
 - [ ] Join TryHackMe and complete first room  
 
 ---
@@ -47,4 +47,5 @@ This file documents the setup steps and progress of my home cybersecurity lab. I
 - Test alerting using Splunk Free (or Wazuh)  
 - Write incident response summary from simulated compromise  
 - Document user audit with PowerShell  
+
 
