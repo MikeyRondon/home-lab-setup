@@ -216,22 +216,22 @@ The following steps have been completed:
    ![manage_agents menu](screenshots/manage_agents.PNG)
    ![manage_agents menu](screenshots/bind_ip.PNG)
 
-3. **Installed the Wazuh agent MSI (v4.12.0-1)** on the Windows VM and registered it using `agent-auth.exe`.  
+2. **Installed the Wazuh agent MSI (v4.12.0-1)** on the Windows VM and registered it using `agent-auth.exe`.  
    ![MSI downloaded](screenshots/msi_dwnld_cmplt.PNG)  
    ![MSI installer complete](screenshots/MSI.PNG)
 
-4. **Verified `agent-auth.exe`** on the Windows VM by confirming its path:  
+3. **Verified `agent-auth.exe`** on the Windows VM by confirming its path:  
    `C:\Program Files (x86)\ossec-agent\agent-auth.exe`.  
    ![program files view](screenshots/prog_files_view_ossec.PNG)
 
-5. **Started and confirmed** the Wazuh agent Windows service (`WazuhSvc`) was running.  
+4. **Started and confirmed** the Wazuh agent Windows service (`WazuhSvc`) was running.  
    ![service name check](screenshots/wazh_srvc_name.PNG)  
    ![service started](screenshots/start_srvc.PNG)
 
-6. **Installed Sysmon64** (v15.15.0.0) and loaded the SwiftOnSecurity configuration from:
+5. **Installed Sysmon64** (v15.15.0.0) and loaded the SwiftOnSecurity configuration from:
    `C:\Users\Labuser\Downloads\sysmonconfig-export.xml`.
 
-7. **Updated** the agent’s `ossec.conf` to include the Sysmon EventChannel:
+6. **Updated** the agent’s `ossec.conf` to include the Sysmon EventChannel:
 
    ```xml
    <localfile>
@@ -240,14 +240,14 @@ The following steps have been completed:
    </localfile>
    ```
 
-8. **Restarted the Wazuh agent service** to apply the new Sysmon settings.  
+7. **Restarted the Wazuh agent service** to apply the new Sysmon settings.  
    ![service restarted](screenshots/restart_service.PNG)
 
-9. **Verified** the agent log shows:
+8. **Verified** the agent log shows:
    `INFO: Analyzing event log: 'Microsoft-Windows-Sysmon/Operational'`.
    ![agent log verification](screenshots/check_agent_log.PNG)
 
-10. **Filtered Sysmon events** in the Wazuh Dashboard by:  
+9. **Filtered Sysmon events** in the Wazuh Dashboard by:  
 - Adding a filter on `rule.groups: sysmon`  
 - Adding the `data.win.system.eventID` column to view Event IDs  
 ![Sysmon event table](screenshots/sysmon_event_table.PNG)
@@ -298,6 +298,40 @@ level: high
 ---
 ## Sysmon Image Load from Non-System Directory
 
+```yaml
+title: Sysmon Image Load from Non-System Directory
+id: 12345678-1234-5678-1234-567812345678
+status: experimental
+description: Detects when Sysmon logs an image-load event (EventID 7) from a directory outside of typical system paths (possible DLL side-loading).
+author: Michael Rondon
+date: 2025-06-28
+references:
+  - https://github.com/SwiftOnSecurity/sysmon-config
+tags:
+  - attack.execution
+  - attack.T1574
+
+logsource:
+  product: windows
+  service: sysmon
+
+detection:
+  selection:
+    EventID: 7
+  whitelist:
+    ImageLoaded|contains:
+      - 'C:\\Windows\\System32'
+      - 'C:\\Windows\\SysWOW64'
+      - 'C:\\Program Files'
+      - 'C:\\Program Files (x86)'
+  condition: selection and not whitelist
+
+falsepositives:
+  - Legitimate software loading non-system DLLs (e.g., plugin architectures)
+
+level: medium
+```
+
 # Incident: Non-System DLL Load Detected
 
 - **Date/Time:** 2025-06-30T17:26:00Z (UTC)
@@ -306,16 +340,26 @@ level: high
 - **Rule:** Sysmon Image Load from Non-System Directory (Sigma ID: 12345678-1234-5678-1234-567812345678)
 - **Description:**  
   A Sysmon image-load event was recorded for `C:\Temp\test.dll`, which resides outside of standard Windows system paths. This triggered our custom Sigma rule to detect potential DLL side-loading.
-- **Evidence:**  
-  ```text
-  TargetFilename: C:\Temp\test.dll
-  TargetFilename: C:\Temp\test.dll
-  ```
+- **Evidence:**
+  - 'TargetFilename: C:\Temp\test.dll'
+  - 'TargetFilename: C:\Temp\test.dll'
+
 - **File Details:**
   - SHA256: `E7B998CEB45C519E55F8542A4BE0AFD3B5B02DCA5D1E907850D1668822BF334`
   - File description: NT Layer DLL
   - Product name: Microsoft® Windows® Operating System
-  - File version: 10.0.19041.5794
+  - File version: 10.0.19041.5794```
+
+## Detection: Temp‐Directory Execution Blocked
+
+- **Detection Rule:** Sysmon Process Execution from Temporary Directory  
+  (Sigma ID: e8f1a2b3-4c5d-6e7f-8a9b-0c1d2e3f4a5b)
+- **Evidence:**  
+  ```text
+  TargetFilename: C:\Users\Labuser\AppData\Local\Temp\notepad.exe
+  win.system.message: "Access to C:\Users\Labuser\AppData\Local\Temp\notepad.exe has been restricted by your Administrator by location with policy rule {f9b51964-5442-4134-8d55-5a8357b0b400} placed on path C:\Users\Labuser\AppData\Local\Temp\*.exe."
+  ```
+![Temp exec alert](screenshots/temp-exec-alert.png)
 
 ### Other Image-Load Events
 
@@ -328,5 +372,3 @@ During review of today’s alerts, the following distinct `ImageLoaded` paths we
 **Impact:**  
 Untrusted code execution could allow an adversary to load malicious binaries into trusted processes.
 
-**Next Steps:**  
-1. Consider blocking or alerting on execution from temporary directories
