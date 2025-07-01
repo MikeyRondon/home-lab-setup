@@ -277,9 +277,13 @@ logsource:
 detection:
   selection:
     EventID: 7
-    EventChannel: Microsoft-Windows-Sysmon/Operational
-    ImageLoaded|contains: vaultcli.dll
-  condition: selection
+  whitelist:
+    ImageLoaded|contains:
+      - 'C:\\Windows\\System32'
+      - 'C:\\Windows\\SysWOW64'
+      - 'C:\\Program Files'
+      - 'C:\\Program Files (x86)'
+  condition: selection and not whitelist
 fields:
   - UtcTime
   - Computer
@@ -293,8 +297,6 @@ level: high
 ```
 ---
 ## Sysmon Image Load from Non-System Directory
----
-
 
 # Incident: Non-System DLL Load Detected
 
@@ -314,19 +316,17 @@ level: high
   - File description: NT Layer DLL
   - Product name: Microsoft® Windows® Operating System
   - File version: 10.0.19041.5794
+
+### Other Image-Load Events
+
+During review of today’s alerts, the following distinct `ImageLoaded` paths were observed:
+
+- `C:\Windows\SysWOW64\taskschd.dll`
+- `C:\Windows\System32\taskschd.dll`
+- `C:\Windows\System32\vaultcli.dll`
   
-  Impact:
+**Impact:**  
 Untrusted code execution could allow an adversary to load malicious binaries into trusted processes.
 
-Next Steps:
-
-Investigate the source and purpose of test.dll.
-
-Review other image-load events for unexpected directories.
-
-Refine Sigma rules to whitelist known safe plugin folders.
-
-Consider blocking or alerting on execution from temporary directories.
-
-**Next steps:**  
-- Draft incident-style summaries based on these events 
+**Next Steps:**  
+1. Consider blocking or alerting on execution from temporary directories
