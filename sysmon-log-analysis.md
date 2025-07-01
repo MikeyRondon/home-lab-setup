@@ -332,6 +332,7 @@ falsepositives:
 
 level: medium
 ```
+---
 
 # Incident: Non-System DLL Load Detected
 
@@ -350,6 +351,8 @@ level: medium
   - File description: NT Layer DLL
   - Product name: Microsoft® Windows® Operating System
   - File version: 10.0.19041.5794
+
+---
 
 ## Detection: Temp‐Directory Execution Blocked
 
