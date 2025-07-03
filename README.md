@@ -56,6 +56,20 @@ To create a secure and flexible virtual environment where I can explore threat d
 
 ---
 
+### 🔐 Security Considerations
+
+- VMs are isolated via Host-Only networking to prevent any accidental exposure to the host or wider Internet.  
+- Snapshots are taken before and after key configurations or experiments; always revert to a clean snapshot.  
+- No sensitive or real production data is ever used—this is a fully disposable test environment.  
+- Internet access is limited strictly to lab-related downloads and OS updates.  
+- **Least-privilege**: Use non-admin accounts for routine testing, elevating only when necessary.  
+- **Integration off**: Host–guest clipboard, drag-drop, and shared folders are disabled.  
+- **Host firewall**: Restricted to only the lab VM IPs and required service ports.  
+- **Encrypted disks**: VM storage volumes are encrypted to protect any transient data.  
+- **Resource caps**: CPU and RAM limits prevent VMs from overwhelming the host.
+
+---
+
 ## 🛠️ Skills Practiced
 
 - Virtual machine management & snapshots  
@@ -86,7 +100,7 @@ To create a secure and flexible virtual environment where I can explore threat d
 
 ---
 
-## 🚧 Planned Improvements
+## 🚀 Planned Improvements
 
 - Set up Active Directory domain  
 - Test alerting with Splunk Free (or Wazuh dashboards)  
