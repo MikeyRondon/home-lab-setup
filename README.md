@@ -1,8 +1,6 @@
 # 🧪 Home Lab Setup
 
-My personal cybersecurity lab using virtual machines and open-source tools.
-
-This project documents the setup and use of my home cybersecurity lab, designed for hands-on learning in IT support, networking, and SOC analyst skills. It includes system configurations, threat simulations, traffic analysis, and writeups for real-world tools.
+My personal cybersecurity lab using virtual machines and open-source tools. This project documents the setup and use of my home cybersecurity lab, designed for hands-on learning in IT support, networking, and SOC analyst skills. It includes system configurations, threat simulations, packet captures, log analysis, and write-ups for real-world tools.
 
 ---
 
@@ -14,73 +12,83 @@ To create a secure and flexible virtual environment where I can explore threat d
 
 ## 🏗️ Lab Overview
 
-- **Host OS**: Windows 10  
-- **Virtualization**: VirtualBox  
-- **VMs Used**:
-  - Kali Linux (attacker/testing)
-  - Windows 10 (endpoint target)
-  - Ubuntu Server (basic service host)
-  - Security Onion or Wazuh (SIEM/log analysis — in progress)
+### Host System
+- **OS:** Windows 10  
+- **RAM:** 16 GB  
+- **CPU:** 8-core  
+- **Storage:** 100+ GB free  
+- **Virtualization:** VirtualBox  
 
-- **Network Configuration**:
-  - NAT + Host-Only Adapter
-  - Isolated internal lab network for traffic inspection
+### 📦 Virtual Machines
+
+| VM Name       | OS / Role        | Purpose                                         |
+|---------------|------------------|-------------------------------------------------|
+| Kali Linux    | Debian-based     | Attacker system; Nmap scans & basic testing     |
+| Windows 10    | Desktop OS       | Endpoint target; Sysmon & log forwarding tests  |
+| Ubuntu Server | Headless server  | Wazuh manager & other service hosting           |
+| Wazuh Agent   | Installed on all | Forwarding logs to central SIEM (Wazuh manager) |
+
+### 🛰️ Networking Setup
+- **Adapter 1:** NAT – Internet access for updates/downloads  
+- **Adapter 2:** Host-Only – Isolated lab network for internal traffic  
+- **Lab Network:** Fully segmented from host and external networks  
 
 ---
 
 ## 🧰 Tools Used
 
-### 🛰️ Networking & Monitoring  
-- Wireshark  
-- Suricata  
-- TCPDump  
+> 🔍 *Some tools are actively in progress.*
 
-### 💻 Endpoint & Systems  
-- Windows 10/11  
-- Ubuntu / Kali Linux  
-- PowerShell & Bash  
+### 🛰️ Networking & Monitoring
+- ✅ Wireshark  
+- 🟡 Suricata *(planned)*  
+- 🟡 TCPDump *(learning)*  
 
-### 🔐 SIEM & Security  
-- Wazuh *(in progress)*  
-- Splunk Free *(planned)*  
-- Sysmon + Event Viewer
+### 💻 Endpoints & Systems
+- ✅ Windows 10/11  
+- ✅ Kali Linux / Ubuntu  
+- ✅ PowerShell & Bash  
+
+### 📊 SIEM & Security
+- ✅ Wazuh (forwarded Sysmon logs, custom Sigma rules & incident reporting)  
+- 🟡 Splunk Free *(planned)*  
+- ✅ Sysmon + Event Viewer  
 
 ---
 
 ## 🛠️ Skills Practiced
 
-- Virtual machine management  
+- Virtual machine management & snapshots  
 - Secure network design & segmentation  
-- Incident simulation & detection  
-- Packet capture & traffic analysis  
+- Packet capture & Wireshark analysis  
+- Sysmon & Wazuh log forwarding  
+- Sigma rule writing & incident documentation  
+- Windows & Linux hardening  
 - Basic red/blue team workflows  
-- Windows and Linux hardening  
-- Threat documentation & reporting
-
----
-
-## 📸 Screenshots
-
-Screenshots are included in individual project folders and lab writeups (see below). They include VM setup, network scans, Wireshark filters, and packet capture views.
 
 ---
 
 ## 📂 Projects
 
-- [Wireshark TCP SYN Scan Analysis](./wireshark-scan-analysis.md)  
-  Performed a TCP SYN scan in an isolated VM lab and analyzed packet flow with Wireshark.
+- 🧪 **[Wireshark TCP SYN Scan Analysis](./wireshark-scan-analysis.md)**  
+  Captured and analyzed a TCP SYN scan with Nmap and Wireshark in an isolated VM lab.  
 
-- [Sysmon Log Analysis](./sysmon-log-analysis.md)  
-  Configured Sysmon on Windows to log process and network events during recon simulations.
-
-- [Home Lab Architecture Overview](./setup-overview.md)  
-  Breakdown of host specs, VM layout, and network segmentation for the lab.
+- 🖥️ **[Sysmon Log Analysis](./sysmon-log-analysis.md)**  
+  Installed and configured Sysmon on Windows, forwarded events to Wazuh, authored Sigma rules, and documented incidents (VaultCli load, Temp-directory execution).
 
 ---
 
 ## 🚧 In Progress
 
-- Simulate phishing attack + detection  
 - Automate lab build with Terraform/Ansible  
-- Endpoint security tests
+- Simulate phishing attack & detection  
+- Endpoint security tests  
 
+---
+
+## 🚧 Planned Improvements
+
+- Set up Active Directory domain  
+- Test alerting with Splunk Free (or Wazuh dashboards)  
+- Write incident response summary from simulated compromise  
+- Develop PowerShell auditing tools  
