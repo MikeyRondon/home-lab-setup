@@ -420,7 +420,7 @@ Fields shown:
 3. Consider deploying an endpoint protection/EDR solution to block known offensive tools.
 
 ---
-## Key Takeaways:
+## ✅ Key Takeaways:
 
 - Sysmon gives you per-event visibility across processes, network, DNS, files, handles, and module loads.
 
@@ -429,6 +429,23 @@ Fields shown:
 - Wazuh integration is straightforward: agent-auth, ossec.conf, and you’re streaming to Kibana.
 
 - Sigma rules let you codify detection and automatically alert on side-loading, temp-exec, etc.
+
+---
+
+## 📂 Repository Structure
+├── sigma/
+│   ├── sysmon-image-load-detect.yml
+│   └── sysmon-temp-execution-detect.yml
+├── screenshots/ (or images/)
+└── sysmon-log-analysis.md
+
+---
+
+## 🔗 References
+
+- [Sysinternals Sysmon](https://docs.microsoft.com/sysinternals/downloads/sysmon)
+- [Wazuh Documentation](https://documentation.wazuh.com/)
+- [Sigma Github](https://github.com/SigmaHQ/sigma)
 
 
 
