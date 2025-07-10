@@ -27,7 +27,7 @@
 <a name="executive-summary"></a>
 ## 📋 Executive Summary
 
-In this lab, I integrated Sysmon on a Windows 10 VM with a Wazuh manager to centralize detailed process and module-load events. I then authored and validated two Sigma rules—one detecting non-system DLL loads and another catching process executions from the Temp directory—and confirmed each end-to-end, including alert generation and Software Restriction Policy blocking. Incident-style write-ups document the detections, evidence, and remediation steps, demonstrating a full SOC workflow: data collection, detection logic, incident analysis, and proactive defense.  
+In this lab, I deployed Sysmon on a Windows 10 VM and configured it to forward detailed process-creation and module-load events to a Wazuh manager. I then wrote and tested two Sigma rules—one to detect non-system DLL loads (EventID 7) and another to catch executable creations from temporary directories (EventID 11)—and verified that each rule generated the expected alerts in Wazuh. Finally, I documented two simulated incidents (a VaultCli.dll load and a Mimikatz credential dump) with incident-style write-ups, including evidence screenshots, concise event summaries, and recommended follow-up actions. This demonstrates a complete SOC workflow: data collection, detection logic, alert validation, incident analysis, and actionable recommendations.  
 
 ---
 <a name="objective"></a>
@@ -466,13 +466,15 @@ Fields shown:
 <a name="key-takeaways"></a>
 ## ✅ Key Takeaways:
 
-- Sysmon gives you per-event visibility across processes, network, DNS, files, handles, and module loads.
+- **Comprehensive visibility**: Sysmon captured ProcessCreate (EventID 1), ImageLoad (EventID 7), FileCreate (EventID 11), and more, giving deep insight into running processes and module loads.
 
-- Tuning filters is critical (default drop rules missed simple file creates).
+- **Filtering & tuning**: Custom filters (via `<localfile>` in `ossec.conf`) and Software Restriction Policies were essential to focus on relevant events (e.g. non-system DLLs, Temp execs) and block noise.
 
-- Wazuh integration is straightforward: agent-auth, ossec.conf, and you’re streaming to Kibana.
+- **Seamless integration**: Wazuh’s agent-auth and `ossec.conf` setup made forwarding Windows EventChannel logs straightforward, with alerts visible in OpenSearch Dashboards.
 
-- Sigma rules let you codify detection and automatically alert on side-loading, temp-exec, etc.
+- **Sigma-driven detection**: Two Sigma rules (non-system DLL loads and Temp-directory process creations) codified your detection logic, automatically flagging side-loading attempts and Mimikatz executions.
+
+- **Incident response workflow**: Simulated incidents (VaultCli side-load and Mimikatz credential dump) were documented with evidence, concise event summaries, and recommended follow-up actions, demonstrating end-to-end SOC processes.
 
 ---
 <a name="repository-structure"></a>
