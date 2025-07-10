@@ -5,26 +5,21 @@
 ---
 <!-- Table of Contents -->
 ## 📑 Table of Contents
-1. [📋 Executive Summary](#executive_summary)  
-2. [🎯 Objectives](#objectives)  
-3. [🛠️ Lab Setup](#lab-setup)  
+
+1. [📋 Executive Summary](#executive-summary)  
+2. [🎯 Objective](#objective)  
+3. [🛠️ Lab Environment](#lab-environment)  
 4. [🔄 Forward Sysmon Logs to Wazuh](#forward-sysmon-logs-to-wazuh)  
-   1. [Generate Agent Key](#generate-agent-key)  
-   2. [Install & Register Agent](#install--register-agent)  
-   3. [Deploy Sysmon & Configure ossec.conf](#deploy-sysmon--configure-ossecconf)  
-   4. [Verify in Wazuh Discover](#verify-in-wazuh-discover)  
 5. [🛡️ Sigma Detection Rules](#sigma-detection-rules)  
-   1. [VaultCli Module Load Rule](#vaultcli-module-load-rule)  
-   2. [Non-System DLL Load Rule](#non-system-dll-load-rule)  
-   3. [Process Execution from Temp Rule](#process-execution-from-temp-rule)  
-   > _See full YAML in the [sigma/](sigma/) folder_  
+   - [VaultCli Module Load Rule](#vaultcli-module-load-rule)  
+   - [Non-System DLL Load Rule](#sysmon-image-load-from-non-system-directory)  
+   - [Process Execution from Temp Rule](#process-execution-from-temporary-directory)  
+   > _See full Sigma rule definitions in the [sigma/](sigma/) folder_  
 6. [🚨 Incident: Non-System DLL Load Detected](#incident-non-system-dll-load-detected)  
 7. [🚨 Incident: Mimikatz Credential Dump Detected](#incident-mimikatz-credential-dump-detected)  
-   - Evidence (UI & CLI)  
-   - Recommended Follow-Up Actions  
 8. [✅ Key Takeaways](#key-takeaways)  
 9. [📂 Repository Structure](#repository-structure)  
-10. [🔗 References](#references)
+10. [🔗 References](#references)  
 
 ---
 
