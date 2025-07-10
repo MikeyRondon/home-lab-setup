@@ -278,6 +278,7 @@ The following steps have been completed:
 # 🛡️ Sigma Detection Rules
 > _See full YAML in the [sigma/](sigma/) folder_
 
+<a name="vaultcli-module-load-rule"></a>
 ## Suspicious VaultCli Module Load
 
 ```yaml
@@ -422,6 +423,7 @@ Fields shown:
 3. Consider deploying an endpoint protection/EDR solution to block known offensive tools.
 
 ---
+<a name="key-takeaways"></a>
 ## ✅ Key Takeaways:
 
 - Sysmon gives you per-event visibility across processes, network, DNS, files, handles, and module loads.
@@ -433,7 +435,7 @@ Fields shown:
 - Sigma rules let you codify detection and automatically alert on side-loading, temp-exec, etc.
 
 ---
-
+<a name="repository-structure"></a>
 ## 📂 Repository Structure
 ├── sigma/
 │   ├── sysmon-image-load-detect.yml
@@ -442,7 +444,7 @@ Fields shown:
 └── sysmon-log-analysis.md
 
 ---
-
+<a name="references"></a>
 ## 🔗 References
 
 - [Sysinternals Sysmon](https://docs.microsoft.com/sysinternals/downloads/sysmon)
