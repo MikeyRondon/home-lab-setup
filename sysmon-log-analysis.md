@@ -443,8 +443,14 @@ Untrusted code execution could allow an adversary to load malicious binaries int
 - **Description:**  
   PowerShell dropped `mimikatz.exe` into a temporary folder, indicating a credential-dump attempt.  
 
+**Evidence (binary):**  
+![Mimikatz Binary](screenshots/mimikatz-binary.png)
+
+**Evidence (console):**  
+![Mimikatz Credential Dump](screenshots/mimikatz-cred-dump.png)
+
 **Evidence (Wazuh UI):**  
-![Mimikatz Alert Table](images/screenshot-mimikatz-ui-table.png)
+![Mimikatz Alert Table](screenshots/mimikatz-ui-table.png)
 
 Fields shown:  
 - **rule.id** = 92203  
