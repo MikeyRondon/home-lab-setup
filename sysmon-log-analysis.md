@@ -14,7 +14,7 @@
 6. [🛡️ Sigma Detection Rules](#sigma-detection-rules)  
    - [VaultCli Module Load Rule](#vaultcli-module-load-rule)  
    - [Non-System DLL Load Rule](#sysmon-image-load-from-non-system-directory)  
-   - [Process Execution from Temp Rule](#process-execution-from-temporary-directory)  
+   - [Process Execution from Temp Rule](#Process-Execution-from-Temp)  
    > _See full Sigma rule definitions in the [sigma/](sigma/) folder_  
 7. [🚨 Incident: Non-System DLL Load Detected](#incident-non-system-dll-load-detected)  
 8. [🚨 Incident: Mimikatz Credential Dump Detected](#incident-mimikatz-credential-dump-detected)  
