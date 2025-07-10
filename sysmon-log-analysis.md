@@ -29,13 +29,13 @@
 In this lab, I integrated Sysmon on a Windows 10 VM with a Wazuh manager to centralize detailed process and module-load events. I then authored and validated two Sigma rules—one detecting non-system DLL loads and another catching process executions from the Temp directory—and confirmed each end-to-end, including alert generation and Software Restriction Policy blocking. Incident-style write-ups document the detections, evidence, and remediation steps, demonstrating a full SOC workflow: data collection, detection logic, incident analysis, and proactive defense.  
 
 ---
-
+<a name="objective"></a>
 ## 🎯 Objective
 
 To install and configure Sysmon on a Windows 10 virtual machine and analyze logs generated during controlled simulations of common attacker behavior. The goal is to understand how Sysmon enhances visibility into endpoint behavior.
 
 ---
-
+<a name="lab-environment"></a>
 ## 🧪 Lab Environment
 
 - **Windows 10 VM** (Target)  
@@ -227,7 +227,7 @@ Logged as Event ID 7, capturing `ImageLoaded`, `Hashes`, `ImageSize`, and `Signe
 - **Anomalies:** None
 
 ---
-
+<a name="forward-sysmon-logs-to-wazuh"></a>
 ## 📤 Forward Sysmon logs to Wazuh
 
 The following steps have been completed:
