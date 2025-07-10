@@ -8,18 +8,19 @@
 
 1. [📋 Executive Summary](#executive-summary)  
 2. [🎯 Objective](#objective)  
-3. [🛠️ Lab Environment](#lab-environment)  
-4. [🔄 Forward Sysmon Logs to Wazuh](#forward-sysmon-logs-to-wazuh)  
-5. [🛡️ Sigma Detection Rules](#sigma-detection-rules)  
+3. [🛠️ Lab Environment](#lab-environment)
+4. [🔍 Simulated Events and Observations](#Simulated-events-and-observations)  
+5. [🔄 Forward Sysmon Logs to Wazuh](#forward-sysmon-logs-to-wazuh)  
+6. [🛡️ Sigma Detection Rules](#sigma-detection-rules)  
    - [VaultCli Module Load Rule](#vaultcli-module-load-rule)  
    - [Non-System DLL Load Rule](#sysmon-image-load-from-non-system-directory)  
    - [Process Execution from Temp Rule](#process-execution-from-temporary-directory)  
    > _See full Sigma rule definitions in the [sigma/](sigma/) folder_  
-6. [🚨 Incident: Non-System DLL Load Detected](#incident-non-system-dll-load-detected)  
-7. [🚨 Incident: Mimikatz Credential Dump Detected](#incident-mimikatz-credential-dump-detected)  
-8. [✅ Key Takeaways](#key-takeaways)  
-9. [📂 Repository Structure](#repository-structure)  
-10. [🔗 References](#references)  
+7. [🚨 Incident: Non-System DLL Load Detected](#incident-non-system-dll-load-detected)  
+8. [🚨 Incident: Mimikatz Credential Dump Detected](#incident-mimikatz-credential-dump-detected)  
+9. [✅ Key Takeaways](#key-takeaways)  
+10. [📂 Repository Structure](#repository-structure)  
+11. [🔗 References](#references)  
 
 ---
 
@@ -52,7 +53,7 @@ To install and configure Sysmon on a Windows 10 virtual machine and analyze logs
   - Nmap (optional)
 
 ---
-
+<a name="Simulated-events-and-observations"></a>
 ## 🔍 Simulated Events and Observations
 
 ### 🔹 Process Creation – Calculator (Event ID 1)
@@ -273,7 +274,7 @@ The following steps have been completed:
 ![Sysmon event table](screenshots/sysmon_event_table.PNG)
 
 ---
-
+<a name="sigma-detection-rules"></a>
 # 🛡️ Sigma Detection Rules
 > _See full YAML in the [sigma/](sigma/) folder_
 
