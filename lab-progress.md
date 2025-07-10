@@ -32,6 +32,11 @@ This file documents the setup steps and progress of my home cybersecurity lab. I
 - [x] Installed and configured Ubuntu Server for Wazuh manager  
 - [x] Deployed Wazuh as a SIEM/log aggregator  
 - [x] Configured Wazuh to collect and correlate logs  
+- [x] Created Sigma rule for non-system DLL loads (`sigma/sysmon-image-load-detect.yml`)  
+- [x] Created Sigma rule for Temp-directory process executions (`sigma/sysmon-temp-execution-detect.yml`)  
+- [x] Tested Sigma rules with VaultCli.dll and `test.dll` scenarios  
+- [x] Enforced Software Restriction Policy to block Temp-folder executables  
+- [x] Simulated Mimikatz credential-dump, captured detection in Wazuh, and wrote incident summary  
 
 ---
 
@@ -44,8 +49,7 @@ This file documents the setup steps and progress of my home cybersecurity lab. I
 ## 🎯 Planned Improvements
 
 - Set up basic Active Directory domain  
-- Test alerting using Splunk Free (or Wazuh)  
-- Write incident response summary from simulated compromise  
+- Build a Wazuh/OpenSearch dashboard for Sysmon alerts  
+- Expand Sigma rules for other Sysmon EventIDs (e.g., NetworkConnect, Registry changes)  
 - Document user audit with PowerShell  
-
 
