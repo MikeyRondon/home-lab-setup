@@ -23,6 +23,7 @@
 
 ---
 
+<a name="executive-summary"></a>
 ## 📋 Executive Summary
 
 In this lab, I integrated Sysmon on a Windows 10 VM with a Wazuh manager to centralize detailed process and module-load events. I then authored and validated two Sigma rules—one detecting non-system DLL loads and another catching process executions from the Temp directory—and confirmed each end-to-end, including alert generation and Software Restriction Policy blocking. Incident-style write-ups document the detections, evidence, and remediation steps, demonstrating a full SOC workflow: data collection, detection logic, incident analysis, and proactive defense.  
