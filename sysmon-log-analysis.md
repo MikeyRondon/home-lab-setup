@@ -380,4 +380,27 @@ Untrusted code execution could allow an adversary to load malicious binaries int
 
 In this lab, I integrated Sysmon on a Windows 10 VM with a Wazuh manager to centralize detailed process and module-load events. I then authored and validated two Sigma rules—one detecting non-system DLL loads and another catching process executions from the Temp directory—and confirmed each end-to-end, including alert generation and Software Restriction Policy blocking. Incident-style write-ups document the detections, evidence, and remediation steps, demonstrating a full SOC workflow: data collection, detection logic, incident analysis, and proactive defense.  
 
+## Incident: Mimikatz Credential Dump Detected
+
+- **Date/Time:** 2025-07-09T22:29:26Z (UTC)  
+- **Host:** DESKTOP-OM1C5E5 (agent ID 002, 192.168.56.104)  
+- **Event ID:** 11 (FileCreate)  
+- **Rule:** Sysmon Process Execution from Temporary Directory  
+  (Sigma ID: e8f1a2b3-4c5d-6e7f-8a9b-0c1d2e3f4a5b / Wazuh Rule ID: 92203)  
+- **Description:**  
+  PowerShell dropped `mimikatz.exe` into a temporary folder, indicating a credential-dump attempt.  
+
+**Evidence (Wazuh UI):**  
+![Mimikatz Alert Table](images/screenshot-mimikatz-ui-table.png)
+
+Fields shown:  
+- **rule.id** = 92203  
+- **data.win.system.eventID** = 11  
+- **data.win.eventdata.targetFilename** = C:\Temp\Tools\Win32\mimikatz.exe
+
+**Recommended Follow-Up Actions:**  
+1. Quarantine the affected VM and reset any exposed credentials.  
+2. Harden PowerShell logging (enable script-block and module logging).  
+3. Consider deploying an endpoint protection/EDR solution to block known offensive tools.
+
 
