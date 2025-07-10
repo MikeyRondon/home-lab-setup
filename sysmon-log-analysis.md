@@ -5,7 +5,7 @@
 ---
 <!-- Table of Contents -->
 ## 📑 Table of Contents
-1. [📋 Executive Summary](#executive-summary)  
+1. [📋 Executive Summary](#executive_summary)  
 2. [🎯 Objectives](#objectives)  
 3. [🛠️ Lab Setup](#lab-setup)  
 4. [🔄 Forward Sysmon Logs to Wazuh](#forward-sysmon-logs-to-wazuh)  
