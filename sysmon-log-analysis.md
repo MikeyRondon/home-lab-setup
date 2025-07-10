@@ -3,6 +3,36 @@
 > 📝 This project explores Windows event logging using Sysmon to detect and document suspicious activity such as scans, execution of binaries, network connections, DNS queries, file creation, process access, and image loads.
 
 ---
+<!-- Table of Contents -->
+## 📑 Table of Contents
+1. [📋 Executive Summary](#executive-summary)  
+2. [🎯 Objectives](#objectives)  
+3. [🛠️ Lab Setup](#lab-setup)  
+4. [🔄 Forward Sysmon Logs to Wazuh](#forward-sysmon-logs-to-wazuh)  
+   1. [Generate Agent Key](#generate-agent-key)  
+   2. [Install & Register Agent](#install--register-agent)  
+   3. [Deploy Sysmon & Configure ossec.conf](#deploy-sysmon--configure-ossecconf)  
+   4. [Verify in Wazuh Discover](#verify-in-wazuh-discover)  
+5. [🛡️ Sigma Detection Rules](#sigma-detection-rules)  
+   1. [VaultCli Module Load Rule](#vaultcli-module-load-rule)  
+   2. [Non-System DLL Load Rule](#non-system-dll-load-rule)  
+   3. [Process Execution from Temp Rule](#process-execution-from-temp-rule)  
+   > _See full YAML in the [sigma/](sigma/) folder_  
+6. [🚨 Incident: Non-System DLL Load Detected](#incident-non-system-dll-load-detected)  
+7. [🚨 Incident: Mimikatz Credential Dump Detected](#incident-mimikatz-credential-dump-detected)  
+   - Evidence (UI & CLI)  
+   - Recommended Follow-Up Actions  
+8. [✅ Key Takeaways](#key-takeaways)  
+9. [📂 Repository Structure](#repository-structure)  
+10. [🔗 References](#references)
+
+---
+
+## 📋 Executive Summary
+
+In this lab, I integrated Sysmon on a Windows 10 VM with a Wazuh manager to centralize detailed process and module-load events. I then authored and validated two Sigma rules—one detecting non-system DLL loads and another catching process executions from the Temp directory—and confirmed each end-to-end, including alert generation and Software Restriction Policy blocking. Incident-style write-ups document the detections, evidence, and remediation steps, demonstrating a full SOC workflow: data collection, detection logic, incident analysis, and proactive defense.  
+
+---
 
 ## 🎯 Objective
 
@@ -202,12 +232,6 @@ Logged as Event ID 7, capturing `ImageLoaded`, `Hashes`, `ImageSize`, and `Signe
 
 ---
 
-## ✅ Summary
-
-This lab demonstrates how Sysmon’s detailed event logging across process, network, DNS, file, handle-access, and image-load events provides comprehensive endpoint visibility. Tuning the configuration is critical to ensure you capture high-fidelity data for threat detection and SIEM integration.
-
----
-
 ## 📤 Forward Sysmon logs to Wazuh
 
 The following steps have been completed:
@@ -255,6 +279,7 @@ The following steps have been completed:
 ---
 
 # 🛡️ Sigma Detection Rules
+> _See full YAML in the [sigma/](sigma/) folder_
 
 ## Suspicious VaultCli Module Load
 
@@ -376,10 +401,6 @@ During review of today’s alerts, the following distinct `ImageLoaded` paths we
 **Impact:**  
 Untrusted code execution could allow an adversary to load malicious binaries into trusted processes.
 
-## 📋 Executive Summary
-
-In this lab, I integrated Sysmon on a Windows 10 VM with a Wazuh manager to centralize detailed process and module-load events. I then authored and validated two Sigma rules—one detecting non-system DLL loads and another catching process executions from the Temp directory—and confirmed each end-to-end, including alert generation and Software Restriction Policy blocking. Incident-style write-ups document the detections, evidence, and remediation steps, demonstrating a full SOC workflow: data collection, detection logic, incident analysis, and proactive defense.  
-
 ## Incident: Mimikatz Credential Dump Detected
 
 - **Date/Time:** 2025-07-09T22:29:26Z (UTC)  
@@ -402,5 +423,17 @@ Fields shown:
 1. Quarantine the affected VM and reset any exposed credentials.  
 2. Harden PowerShell logging (enable script-block and module logging).  
 3. Consider deploying an endpoint protection/EDR solution to block known offensive tools.
+
+---
+## Key Takeaways:
+
+- Sysmon gives you per-event visibility across processes, network, DNS, files, handles, and module loads.
+
+- Tuning filters is critical (default drop rules missed simple file creates).
+
+- Wazuh integration is straightforward: agent-auth, ossec.conf, and you’re streaming to Kibana.
+
+- Sigma rules let you codify detection and automatically alert on side-loading, temp-exec, etc.
+
 
 
