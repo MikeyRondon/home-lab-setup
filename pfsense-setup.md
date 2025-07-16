@@ -1,5 +1,8 @@
 # pfSense Setup & Configuration
 
+## 🎯 Objective
+Implement basic firewalling and outbound NAT to allow LAN clients Internet access while blocking unsolicited inbound traffic.
+
 ## 1. Project Overview
 - Goals & features
 - Lab topology diagram
