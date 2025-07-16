@@ -1,6 +1,6 @@
 # 🧪 Lab Progress Tracker
 
-This file documents the setup steps and progress of my home cybersecurity lab. It includes systems installed, configurations completed, and upcoming improvements.
+> This file documents the setup steps and progress of my home cybersecurity lab. It includes systems installed, configurations completed, and upcoming improvements.
 
 ---
 
