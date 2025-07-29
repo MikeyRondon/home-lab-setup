@@ -37,7 +37,7 @@ Implement basic firewalling and outbound NAT to allow LAN clients Internet acces
    * Adapter 1: NAT (WAN)
    * Adapter 2: Host‑only (vboxnet0)
 
-*Screenshot: `pfsense_vm_settings.png`*
+![pfsense Settings](./screenshots/pfsense_vm_settings.png) 
 
 ---
 
@@ -53,7 +53,7 @@ Implement basic firewalling and outbound NAT to allow LAN clients Internet acces
    * Enable DHCP: `192.168.1.100–200`
 5. **Complete install**: Remove ISO, reboot
 
-*Screenshot: `pfsense_console_interfaces.png`*
+![pfsense Console](./screenshots/pfsense_console_interfaces.png)
 
 ---
 
@@ -79,7 +79,7 @@ Implement basic firewalling and outbound NAT to allow LAN clients Internet acces
    ipconfig /renew "Ethernet 2"
    ```
 
-*Screenshot: `windows_lan_ipconfig.png`*
+![Ip Config](./screenshots/windows_lan_ipconfig.png) *Screenshot: `windows_lan_ipconfig.png`*
 
 ---
 
@@ -101,7 +101,8 @@ Implement basic firewalling and outbound NAT to allow LAN clients Internet acces
 6. **Time Zone**: Select region → **Next**
 7. **Finish** → Dashboard
 
-*Screenshots: `pfsense_login.png`, `pfsense_change_password.png`*
+![login](./screenshots/pfsense_login.png)
+![PW Change](./screenshots/pfsense_change_password.png) 
 
 ---
 
@@ -110,7 +111,7 @@ Implement basic firewalling and outbound NAT to allow LAN clients Internet acces
 * Confirm **WAN** shows a 10.0.2.x address
 * Confirm **LAN** is `192.168.1.1`
 
-*Screenshot: `pfsense_dashboard.png`*
+![Dashboard](./screenshots/pfsense_dashboard.png)
 
 ---
 
@@ -126,11 +127,9 @@ Implement basic firewalling and outbound NAT to allow LAN clients Internet acces
    * **Status → System Logs → Firewall**
    * Confirm blocked entries
 
-*Screenshots:*
-
-* `pfsense_firewall_block_wan.png`
-* `kali_nmap_wan_scan.png`
-* `pfsense_wan_log_block.png`
+![Firewall Block](./screenshots/pfsense_firewall_block_wan.png)
+![Nmap Scan](./screenshots/kali_nmap_wan_scan.png)
+![log block](./screenshots/pfsense_wan_log_block.png)
 
 ---
 
